@@ -22,7 +22,6 @@ const MIME_TYPES = {
 };
 
 module.exports = (req, res) => {
-  // CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
 
@@ -34,7 +33,7 @@ module.exports = (req, res) => {
 
   let reqUrl = decodeURI((req.url || '/').split('?')[0]);
 
-  // API Config endpoint
+  // Handle /api/config endpoint
   if (reqUrl === '/api/config') {
     res.statusCode = 200;
     res.setHeader('Content-Type', 'application/json; charset=utf-8');
@@ -52,7 +51,7 @@ module.exports = (req, res) => {
     reqUrl = '/admin.html';
   }
 
-  // Security: block access to hidden or sensitive files
+  // Security: block access to hidden files
   if (reqUrl.startsWith('/.') || reqUrl.includes('/.env') || reqUrl.includes('/.git')) {
     res.statusCode = 403;
     res.setHeader('Content-Type', 'text/plain');
@@ -60,7 +59,8 @@ module.exports = (req, res) => {
     return;
   }
 
-  let filePath = path.join(__dirname, reqUrl);
+  const cleanRelPath = reqUrl.replace(/^\//, '');
+  let filePath = path.join(__dirname, '..', cleanRelPath);
 
   if (fs.existsSync(filePath) && fs.statSync(filePath).isDirectory()) {
     filePath = path.join(filePath, 'index.html');

@@ -2,7 +2,6 @@
   "name": "jt-hair-and-beauty-salon-sg",
   "version": "1.0.0",
   "description": "JT Hair & Beauty Salon SG",
-  "main": "index.js",
   "scripts": {
     "dev": "node local-server.js",
     "start": "node local-server.js"

@@ -1,0 +1,13 @@
+{
+  "name": "jt-hair-and-beauty-salon-sg",
+  "version": "1.0.0",
+  "description": "JT Hair & Beauty Salon SG",
+  "scripts": {
+    "build": "echo Build complete",
+    "dev": "node local-server.js",
+    "start": "node local-server.js"
+  },
+  "keywords": [],
+  "author": "JT Hair & Beauty Salon SG",
+  "license": "ISC"
+}

@@ -242,6 +242,14 @@
             <span id="sidebarSliderBadge" class="px-2 py-0.5 rounded-full text-[10px] bg-blush-300 text-espresso font-black">3</span>
           </button>
 
+          <button data-tab="stylists" class="tab-nav-btn flex items-center justify-between px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold tracking-wider uppercase text-left transition-all text-cream/70 hover:text-cream hover:bg-white/5 border border-transparent">
+            <div class="flex items-center gap-3">
+              <span>💇</span>
+              <span class="whitespace-nowrap">Stylists &amp; Team</span>
+            </div>
+            <span id="sidebarStylistsBadge" class="px-2 py-0.5 rounded-full text-[10px] bg-blush-300 text-espresso font-black">4</span>
+          </button>
+
           <button data-tab="schedule" class="tab-nav-btn flex items-center gap-3 px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold tracking-wider uppercase text-left transition-all text-cream/70 hover:text-cream hover:bg-white/5 border border-transparent">
             <span>⏰</span>
             <span class="whitespace-nowrap">Working Hours</span>
@@ -742,6 +750,45 @@
 
 
         <!-- ================================================================= -->
+        <!-- TAB: STYLISTS & TEAM DIRECTORY                                    -->
+        <!-- ================================================================= -->
+        <section id="tab-stylists" class="tab-content hidden space-y-6">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <div class="inline-flex items-center px-3 py-1 rounded-full bg-blush-300/15 text-blush-300 text-xs font-bold uppercase tracking-wider mb-2 border border-blush-300/30">
+                Staff &amp; Stylist Directory ✦
+              </div>
+              <h2 class="text-3xl sm:text-4xl font-condensed-impact uppercase text-cream">Stylists &amp; Team Management</h2>
+              <p class="text-xs text-cream/60">Add, edit, and manage stylists available for customer appointment bookings</p>
+            </div>
+            <button id="addStylistBtn" class="px-5 py-2.5 rounded-full bg-blush-300 text-espresso text-xs font-bold tracking-wider uppercase hover:bg-blush-400 transition-all shadow cursor-pointer">
+              + Add New Stylist
+            </button>
+          </div>
+
+          <!-- Stylist Info Banner -->
+          <div class="p-4 rounded-2xl bg-blush-300/10 border border-blush-300/20 text-xs text-blush-300 flex items-start sm:items-center justify-between gap-3 shadow-sm">
+            <div class="flex items-center gap-2.5">
+              <span class="text-lg">✨</span>
+              <p>Stylists marked as <span class="font-bold text-emerald-300">Active</span> automatically appear in the client booking dropdown on the website in real time.</p>
+            </div>
+            <span id="stylistsActiveCountBadge" class="hidden sm:inline-block px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-[11px] font-bold">4 Active</span>
+          </div>
+
+          <!-- Stylists Cards Grid Container -->
+          <div id="stylistsGridContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <!-- Rendered dynamically via JS -->
+          </div>
+
+          <div id="noStylistsMsg" class="hidden text-center py-12 text-cream/50 text-sm glass-panel rounded-3xl">
+            <p class="text-2xl mb-2">💇</p>
+            <p class="font-semibold text-cream">No stylists configured yet</p>
+            <p class="text-xs text-cream/60 mt-1">Click "+ Add New Stylist" above to add your salon team members.</p>
+          </div>
+        </section>
+
+
+        <!-- ================================================================= -->
         <!-- TAB 6: SECURITY & CREDENTIALS                                     -->
         <!-- ================================================================= -->
         <section id="tab-security" class="tab-content hidden space-y-6">
@@ -964,6 +1011,99 @@
 
 
   <!-- ========================================================================= -->
+  <!-- MODAL: ADD / EDIT STYLIST                                                 -->
+  <!-- ========================================================================= -->
+  <div id="stylistModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="glass-panel p-6 sm:p-8 rounded-3xl w-full max-w-lg shadow-2xl relative max-h-[92vh] overflow-y-auto custom-scrollbar">
+      <button id="closeStylistModalBtn" class="absolute top-5 right-5 text-cream/60 hover:text-cream text-lg">✕</button>
+      <h3 id="stylistModalTitle" class="text-xl font-condensed-impact uppercase text-cream mb-4">Add New Stylist</h3>
+      
+      <form id="stylistForm" class="space-y-4">
+        <input type="hidden" id="stylistId">
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-cream/80 mb-2">Stylist Name</label>
+            <input type="text" id="stylistName" required placeholder="e.g. Jessica Tan" class="w-full px-4 py-3 rounded-2xl bg-espressoDark/90 border border-white/15 text-cream text-sm focus:outline-none focus:ring-2 focus:ring-blush-400">
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-cream/80 mb-2">Role / Title</label>
+            <input type="text" id="stylistRole" required placeholder="e.g. Master Director" class="w-full px-4 py-3 rounded-2xl bg-espressoDark/90 border border-white/15 text-cream text-sm focus:outline-none focus:ring-2 focus:ring-blush-400">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-cream/80 mb-2">Specialty / Expertise</label>
+            <input type="text" id="stylistSpecialty" required placeholder="e.g. Extensions &amp; Balayage" class="w-full px-4 py-3 rounded-2xl bg-espressoDark/90 border border-white/15 text-cream text-sm focus:outline-none focus:ring-2 focus:ring-blush-400">
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-cream/80 mb-2">Experience (Optional)</label>
+            <input type="text" id="stylistExperience" placeholder="e.g. 10+ Years Exp" class="w-full px-4 py-3 rounded-2xl bg-espressoDark/90 border border-white/15 text-cream text-sm focus:outline-none focus:ring-2 focus:ring-blush-400">
+          </div>
+        </div>
+
+        <!-- Stylist Photo / Avatar Upload -->
+        <div class="space-y-2.5">
+          <div class="flex items-center justify-between">
+            <label class="block text-xs font-bold uppercase tracking-wider text-cream/80">Stylist Photo / Portrait</label>
+            <span class="text-[10px] text-blush-400 uppercase font-bold tracking-wider">Device File or URL</span>
+          </div>
+
+          <!-- Upload Drop Zone -->
+          <div id="stylistDropZone" class="border-2 border-dashed border-white/20 hover:border-blush-300/60 rounded-2xl p-4 text-center cursor-pointer transition-all bg-espressoDark/50 hover:bg-espressoDark/80 group">
+            <input type="file" id="stylistFileInput" accept="image/*" class="hidden">
+            <div class="flex flex-col items-center justify-center gap-1.5">
+              <span class="text-2xl group-hover:scale-110 transition-transform">👤</span>
+              <p class="text-xs font-bold text-cream group-hover:text-blush-300 transition-colors">Upload Stylist Photo from Device</p>
+              <p class="text-[10px] text-cream/50">Square portrait (JPG, PNG, WebP)</p>
+            </div>
+          </div>
+
+          <!-- URL Input Alternative -->
+          <div>
+            <label class="block text-[10px] font-bold uppercase tracking-wider text-cream/50 mb-1">Or Paste Photo URL:</label>
+            <input type="text" id="stylistAvatar" placeholder="https://... or photo.jpg" class="w-full px-4 py-2.5 rounded-xl bg-espressoDark/90 border border-white/15 text-cream text-xs font-mono focus:outline-none focus:ring-2 focus:ring-blush-400">
+          </div>
+
+          <!-- Live Avatar Preview -->
+          <div id="stylistPreviewContainer" class="hidden flex items-center gap-3 p-3 rounded-xl bg-espressoDark/80 border border-white/10 mt-2">
+            <div class="w-14 h-14 rounded-full overflow-hidden border-2 border-blush-300 shadow flex-shrink-0 bg-espresso">
+              <img id="stylistPreviewImg" src="" alt="Stylist Preview" class="w-full h-full object-cover">
+            </div>
+            <div>
+              <p id="stylistPreviewName" class="text-xs font-bold text-cream">Stylist Name</p>
+              <p id="stylistPreviewRole" class="text-[11px] text-blush-300">Stylist Role</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Active Status Checkbox -->
+        <div class="p-3.5 rounded-2xl bg-espressoDark/60 border border-white/10 flex items-center justify-between">
+          <div>
+            <p class="text-xs font-bold text-cream">Active for Customer Bookings</p>
+            <p class="text-[10px] text-cream/50">When enabled, clients can select this stylist on the booking form.</p>
+          </div>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" id="stylistActiveCheckbox" checked class="sr-only peer">
+            <div class="w-11 h-6 bg-white/20 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
+          </label>
+        </div>
+
+        <div class="flex justify-end gap-3 pt-3 border-t border-white/10">
+          <button type="button" id="cancelStylistModalBtn" class="px-5 py-2.5 rounded-full bg-white/10 text-cream text-xs font-bold uppercase tracking-wider hover:bg-white/20 transition-all cursor-pointer">
+            Cancel
+          </button>
+          <button type="submit" class="px-6 py-2.5 rounded-full bg-blush-300 text-espresso text-xs font-bold uppercase tracking-wider hover:bg-blush-400 transition-all cursor-pointer">
+            Save Stylist ✦
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- ========================================================================= -->
   <!-- MODAL: MANUAL BOOKING CREATION                                            -->
   <!-- ========================================================================= -->
   <div id="bookingModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
@@ -1013,8 +1153,11 @@
         </div>
 
         <div>
-          <label class="block text-xs font-bold uppercase tracking-wider text-cream/80 mb-2">Stylist (Optional)</label>
-          <input type="text" id="manualStylist" placeholder="Any Available Stylist" class="w-full px-4 py-3 rounded-2xl bg-espressoDark/90 border border-white/15 text-cream text-sm">
+          <label class="block text-xs font-bold uppercase tracking-wider text-cream/80 mb-2">Assigned Stylist</label>
+          <select id="manualStylist" class="w-full px-4 py-3 rounded-2xl bg-espressoDark/90 border border-white/15 text-cream text-sm">
+            <option value="Any Available Stylist">Any Available Stylist (First Available)</option>
+            <!-- Populated dynamically via JS from Stylists list -->
+          </select>
         </div>
 
         <div>

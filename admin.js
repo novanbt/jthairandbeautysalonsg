@@ -14,13 +14,53 @@ document.addEventListener('DOMContentLoaded', () => {
     BOOKINGS: 'jt_bookings',
     SERVICES_CONFIG: 'jt_services_config',
     SLIDERS_CONFIG: 'jt_sliders_config',
-    SCHEDULE_CONFIG: 'jt_schedule_config'
+    SCHEDULE_CONFIG: 'jt_schedule_config',
+    STYLISTS_CONFIG: 'jt_stylists_config'
   };
 
   const DEFAULT_AUTH = {
     email: 'admin@jthairsalonsg.com',
     password: '86869418'
   };
+
+  const DEFAULT_STYLISTS = [
+    {
+      id: 'stylist-1',
+      name: 'Jessica Tan',
+      role: 'Master Director',
+      specialty: 'Extensions & Hair Transformation',
+      experience: '12+ Years Exp',
+      avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&q=80',
+      active: true
+    },
+    {
+      id: 'stylist-2',
+      name: 'Marcus Lee',
+      role: 'Senior Colorist',
+      specialty: 'Balayage & Creative Color',
+      experience: '8+ Years Exp',
+      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
+      active: true
+    },
+    {
+      id: 'stylist-3',
+      name: 'Chloe Wang',
+      role: 'Lead Stylist',
+      specialty: 'Editorial Waves & Scalp Spa',
+      experience: '6+ Years Exp',
+      avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80',
+      active: true
+    },
+    {
+      id: 'stylist-4',
+      name: 'David Lim',
+      role: 'Precision Specialist',
+      specialty: 'Precision Cuts & Blowouts',
+      experience: '7+ Years Exp',
+      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80',
+      active: true
+    }
+  ];
 
   const DEFAULT_SERVICES = {
     tag: 'Our Services',
@@ -202,6 +242,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!localStorage.getItem(KEYS.SERVICES_CONFIG)) setStored(KEYS.SERVICES_CONFIG, DEFAULT_SERVICES);
   if (!localStorage.getItem(KEYS.SLIDERS_CONFIG)) setStored(KEYS.SLIDERS_CONFIG, DEFAULT_SLIDERS);
   if (!localStorage.getItem(KEYS.SCHEDULE_CONFIG)) setStored(KEYS.SCHEDULE_CONFIG, DEFAULT_SCHEDULE);
+  if (!localStorage.getItem(KEYS.STYLISTS_CONFIG)) setStored(KEYS.STYLISTS_CONFIG, DEFAULT_STYLISTS);
   if (!localStorage.getItem(KEYS.BOOKINGS)) setStored(KEYS.BOOKINGS, SAMPLE_BOOKINGS);
 
   // =========================================================================
@@ -1785,11 +1826,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (resetDefaultsBtn) {
     resetDefaultsBtn.addEventListener('click', () => {
-      if (confirm('Are you sure you want to reset all data (Services, Sliders, Hours, Sample Bookings) back to factory defaults?')) {
+      if (confirm('Are you sure you want to reset all data (Services, Sliders, Stylists, Hours, Sample Bookings) back to factory defaults?')) {
         setStored(KEYS.AUTH, DEFAULT_AUTH);
         setStored(KEYS.SERVICES_CONFIG, DEFAULT_SERVICES);
         setStored(KEYS.SLIDERS_CONFIG, DEFAULT_SLIDERS);
         setStored(KEYS.SCHEDULE_CONFIG, DEFAULT_SCHEDULE);
+        setStored(KEYS.STYLISTS_CONFIG, DEFAULT_STYLISTS);
         setStored(KEYS.BOOKINGS, SAMPLE_BOOKINGS);
         showToast('All settings reset to defaults.');
         refreshAllData();
@@ -1799,7 +1841,338 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   // =========================================================================
-  // 10. SUPABASE CLOUD LIVE SYNC & REALTIME SUBSCRIPTION
+  // 10. STYLISTS & TEAM MANAGEMENT CONTROLLER
+  // =========================================================================
+  const addStylistBtn = document.getElementById('addStylistBtn');
+  const stylistModal = document.getElementById('stylistModal');
+  const closeStylistModalBtn = document.getElementById('closeStylistModalBtn');
+  const cancelStylistModalBtn = document.getElementById('cancelStylistModalBtn');
+  const stylistForm = document.getElementById('stylistForm');
+  const stylistModalTitle = document.getElementById('stylistModalTitle');
+  const stylistIdInput = document.getElementById('stylistId');
+  const stylistNameInput = document.getElementById('stylistName');
+  const stylistRoleInput = document.getElementById('stylistRole');
+  const stylistSpecialtyInput = document.getElementById('stylistSpecialty');
+  const stylistExperienceInput = document.getElementById('stylistExperience');
+  const stylistAvatarInput = document.getElementById('stylistAvatar');
+  const stylistFileInput = document.getElementById('stylistFileInput');
+  const stylistDropZone = document.getElementById('stylistDropZone');
+  const stylistPreviewContainer = document.getElementById('stylistPreviewContainer');
+  const stylistPreviewImg = document.getElementById('stylistPreviewImg');
+  const stylistPreviewName = document.getElementById('stylistPreviewName');
+  const stylistPreviewRole = document.getElementById('stylistPreviewRole');
+  const stylistActiveCheckbox = document.getElementById('stylistActiveCheckbox');
+
+  function getStylists() {
+    return getStored(KEYS.STYLISTS_CONFIG, DEFAULT_STYLISTS);
+  }
+
+  function setStylists(list) {
+    return setStored(KEYS.STYLISTS_CONFIG, list);
+  }
+
+  function renderStylistsEditor() {
+    const stylists = getStylists();
+    const container = document.getElementById('stylistsGridContainer');
+    const noMsg = document.getElementById('noStylistsMsg');
+    const sidebarBadge = document.getElementById('sidebarStylistsBadge');
+    const activeBadge = document.getElementById('stylistsActiveCountBadge');
+    const manualStylistSelect = document.getElementById('manualStylist');
+
+    const activeCount = stylists.filter(s => s.active !== false).length;
+    if (sidebarBadge) sidebarBadge.textContent = activeCount;
+    if (activeBadge) activeBadge.textContent = `${activeCount} Active`;
+
+    // Populate manual booking stylist dropdown
+    if (manualStylistSelect) {
+      const currentVal = manualStylistSelect.value;
+      manualStylistSelect.innerHTML = '<option value="Any Available Stylist">Any Available Stylist (First Available)</option>';
+      stylists.filter(s => s.active !== false).forEach(s => {
+        const opt = document.createElement('option');
+        opt.value = `${s.name} – ${s.role}`;
+        opt.textContent = `${s.name} – ${s.role} (${s.specialty})`;
+        manualStylistSelect.appendChild(opt);
+      });
+      if (currentVal) manualStylistSelect.value = currentVal;
+    }
+
+    if (!container) return;
+
+    if (stylists.length === 0) {
+      container.innerHTML = '';
+      if (noMsg) noMsg.classList.remove('hidden');
+      return;
+    }
+
+    if (noMsg) noMsg.classList.add('hidden');
+    container.innerHTML = '';
+
+    stylists.forEach((s) => {
+      const card = document.createElement('div');
+      const isActive = s.active !== false;
+      card.className = `glass-panel p-6 rounded-3xl relative overflow-hidden transition-all duration-300 flex flex-col justify-between group ${
+        isActive ? 'border-white/15 hover:border-blush-300/40' : 'opacity-65 border-white/5'
+      }`;
+
+      const avatarSrc = s.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80';
+
+      card.innerHTML = `
+        <div>
+          <!-- Header with Avatar, Name, Role & Status -->
+          <div class="flex items-start justify-between gap-3 mb-4">
+            <div class="flex items-center gap-3.5">
+              <div class="relative w-14 h-14 rounded-2xl overflow-hidden border-2 border-blush-300/40 bg-espresso flex-shrink-0 shadow-md">
+                <img src="${avatarSrc}" alt="${s.name}" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-espresso/40 to-transparent pointer-events-none"></div>
+              </div>
+              <div>
+                <div class="flex items-center gap-2">
+                  <h3 class="text-base font-bold text-cream tracking-wide">${s.name}</h3>
+                </div>
+                <p class="text-xs font-semibold text-blush-300 uppercase tracking-wider mt-0.5">${s.role}</p>
+                ${s.experience ? `<span class="inline-block mt-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-white/10 text-cream/70">${s.experience}</span>` : ''}
+              </div>
+            </div>
+
+            <!-- Active / Inactive Status Badge (Clickable) -->
+            <button data-toggle-stylist="${s.id}" class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all cursor-pointer ${
+              isActive 
+                ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/30' 
+                : 'bg-white/10 text-cream/50 border border-white/10 hover:bg-white/20'
+            }" title="Click to toggle active status for booking form">
+              ${isActive ? '● Active' : '○ Inactive'}
+            </button>
+          </div>
+
+          <!-- Specialty Box -->
+          <div class="p-3.5 rounded-2xl bg-espressoDark/60 border border-white/5 mb-4">
+            <span class="text-[10px] uppercase font-bold tracking-widest text-cream/40 block mb-1">Specialty &amp; Expertise</span>
+            <p class="text-xs font-medium text-cream/90 leading-relaxed">${s.specialty}</p>
+          </div>
+        </div>
+
+        <!-- Action Footer -->
+        <div class="flex items-center justify-between pt-3 border-t border-white/10 mt-2">
+          <span class="text-[11px] text-cream/40">
+            ${isActive ? '✓ Appears on booking form' : '✕ Hidden from bookings'}
+          </span>
+          <div class="flex items-center gap-1.5">
+            <button data-edit-stylist="${s.id}" class="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-cream text-xs font-bold uppercase tracking-wider transition-all cursor-pointer">
+              Edit
+            </button>
+            <button data-delete-stylist="${s.id}" class="px-2.5 py-1.5 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 text-rose-300 text-xs font-bold transition-all cursor-pointer" title="Delete Stylist">
+              🗑️
+            </button>
+          </div>
+        </div>
+      `;
+
+      container.appendChild(card);
+    });
+
+    // Wire up Toggle Active Buttons
+    container.querySelectorAll('[data-toggle-stylist]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.toggleStylist;
+        const list = getStylists();
+        const stylist = list.find(x => x.id === id);
+        if (stylist) {
+          stylist.active = stylist.active === false ? true : false;
+          setStylists(list);
+          showToast(`Stylist ${stylist.name} is now ${stylist.active ? 'ACTIVE (visible in booking form)' : 'INACTIVE (hidden)'}.`);
+          renderStylistsEditor();
+        }
+      });
+    });
+
+    // Wire up Edit Buttons
+    container.querySelectorAll('[data-edit-stylist]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.editStylist;
+        openStylistModal(id);
+      });
+    });
+
+    // Wire up Delete Buttons
+    container.querySelectorAll('[data-delete-stylist]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.deleteStylist;
+        const list = getStylists();
+        const stylist = list.find(x => x.id === id);
+        if (stylist && confirm(`Are you sure you want to delete stylist "${stylist.name}"?`)) {
+          const updated = list.filter(x => x.id !== id);
+          setStylists(updated);
+          showToast(`Stylist ${stylist.name} removed successfully.`);
+          renderStylistsEditor();
+        }
+      });
+    });
+  }
+
+  function openStylistModal(stylistId = null) {
+    if (!stylistModal) return;
+    const isEdit = Boolean(stylistId);
+    stylistModalTitle.textContent = isEdit ? 'Edit Stylist Profile' : 'Add New Stylist';
+    stylistIdInput.value = stylistId || '';
+
+    if (isEdit) {
+      const list = getStylists();
+      const stylist = list.find(x => x.id === stylistId);
+      if (stylist) {
+        stylistNameInput.value = stylist.name || '';
+        stylistRoleInput.value = stylist.role || '';
+        stylistSpecialtyInput.value = stylist.specialty || '';
+        stylistExperienceInput.value = stylist.experience || '';
+        stylistAvatarInput.value = stylist.avatar || '';
+        stylistActiveCheckbox.checked = stylist.active !== false;
+
+        if (stylist.avatar) {
+          stylistPreviewImg.src = stylist.avatar;
+          stylistPreviewName.textContent = stylist.name || 'Stylist Name';
+          stylistPreviewRole.textContent = stylist.role || 'Stylist Role';
+          stylistPreviewContainer.classList.remove('hidden');
+        } else {
+          stylistPreviewContainer.classList.add('hidden');
+        }
+      }
+    } else {
+      stylistForm.reset();
+      stylistIdInput.value = '';
+      stylistActiveCheckbox.checked = true;
+      stylistPreviewContainer.classList.add('hidden');
+    }
+
+    stylistModal.classList.remove('hidden');
+    stylistModal.classList.add('flex');
+    if (stylistNameInput) stylistNameInput.focus();
+  }
+
+  function closeStylistModal() {
+    if (!stylistModal) return;
+    stylistModal.classList.add('hidden');
+    stylistModal.classList.remove('flex');
+  }
+
+  function initStylistsManager() {
+    if (addStylistBtn) {
+      addStylistBtn.addEventListener('click', () => openStylistModal(null));
+    }
+    if (closeStylistModalBtn) {
+      closeStylistModalBtn.addEventListener('click', closeStylistModal);
+    }
+    if (cancelStylistModalBtn) {
+      cancelStylistModalBtn.addEventListener('click', closeStylistModal);
+    }
+    if (stylistModal) {
+      stylistModal.addEventListener('click', (e) => {
+        if (e.target === stylistModal) closeStylistModal();
+      });
+    }
+
+    // Avatar upload dropzone & file input
+    if (stylistDropZone && stylistFileInput) {
+      stylistDropZone.addEventListener('click', () => stylistFileInput.click());
+      stylistDropZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        stylistDropZone.classList.add('border-blush-300', 'bg-espressoDark/90');
+      });
+      stylistDropZone.addEventListener('dragleave', () => {
+        stylistDropZone.classList.remove('border-blush-300', 'bg-espressoDark/90');
+      });
+      stylistDropZone.addEventListener('drop', async (e) => {
+        e.preventDefault();
+        stylistDropZone.classList.remove('border-blush-300', 'bg-espressoDark/90');
+        if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+          const file = e.dataTransfer.files[0];
+          const compressed = await compressImage(file, 600, 600, 0.88);
+          stylistAvatarInput.value = compressed;
+          stylistPreviewImg.src = compressed;
+          stylistPreviewName.textContent = stylistNameInput.value || 'Stylist Name';
+          stylistPreviewRole.textContent = stylistRoleInput.value || 'Stylist Role';
+          stylistPreviewContainer.classList.remove('hidden');
+          showToast('Stylist photo uploaded & optimized ✦');
+        }
+      });
+
+      stylistFileInput.addEventListener('change', async (e) => {
+        if (e.target.files && e.target.files[0]) {
+          const file = e.target.files[0];
+          const compressed = await compressImage(file, 600, 600, 0.88);
+          stylistAvatarInput.value = compressed;
+          stylistPreviewImg.src = compressed;
+          stylistPreviewName.textContent = stylistNameInput.value || 'Stylist Name';
+          stylistPreviewRole.textContent = stylistRoleInput.value || 'Stylist Role';
+          stylistPreviewContainer.classList.remove('hidden');
+          showToast('Stylist photo uploaded & optimized ✦');
+        }
+      });
+    }
+
+    // URL input live preview
+    if (stylistAvatarInput) {
+      stylistAvatarInput.addEventListener('input', () => {
+        const val = stylistAvatarInput.value.trim();
+        if (val) {
+          stylistPreviewImg.src = val;
+          stylistPreviewName.textContent = stylistNameInput.value || 'Stylist Name';
+          stylistPreviewRole.textContent = stylistRoleInput.value || 'Stylist Role';
+          stylistPreviewContainer.classList.remove('hidden');
+        } else {
+          stylistPreviewContainer.classList.add('hidden');
+        }
+      });
+    }
+
+    // Form submit
+    if (stylistForm) {
+      stylistForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const id = stylistIdInput.value;
+        const name = stylistNameInput.value.trim();
+        const role = stylistRoleInput.value.trim();
+        const specialty = stylistSpecialtyInput.value.trim();
+        const experience = stylistExperienceInput.value.trim();
+        const avatar = stylistAvatarInput.value.trim() || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80';
+        const active = stylistActiveCheckbox.checked;
+
+        if (!name || !role || !specialty) {
+          showToast('Please fill in Stylist Name, Role and Specialty.', 'error');
+          return;
+        }
+
+        let list = getStylists();
+        if (id) {
+          // Update existing
+          const idx = list.findIndex(x => x.id === id);
+          if (idx !== -1) {
+            list[idx] = { ...list[idx], name, role, specialty, experience, avatar, active };
+            showToast(`Stylist ${name} updated successfully! ✦`);
+          }
+        } else {
+          // Add new
+          const newStylist = {
+            id: 'stylist-' + Date.now().toString(36),
+            name,
+            role,
+            specialty,
+            experience,
+            avatar,
+            active
+          };
+          list.push(newStylist);
+          showToast(`Stylist ${name} added to salon directory! ✦`);
+        }
+
+        setStylists(list);
+        closeStylistModal();
+        renderStylistsEditor();
+      });
+    }
+  }
+
+
+  // =========================================================================
+  // 11. SUPABASE CLOUD LIVE SYNC & REALTIME SUBSCRIPTION
   // =========================================================================
   let supabaseSyncInitialized = false;
 
@@ -1852,12 +2225,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =========================================================================
-  // 11. REFRESH ALL VIEWS & CROSS-TAB STORAGE SYNC
+  // 12. REFRESH ALL VIEWS & CROSS-TAB STORAGE SYNC
   // =========================================================================
   function refreshAllData() {
     renderBookings();
     renderServicesEditor();
     renderSlidersEditor();
+    renderStylistsEditor();
     renderScheduleEditor();
     renderSecurityTab();
     initSupabaseSync();
@@ -1866,6 +2240,9 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('storage', () => {
     refreshAllData();
   });
+
+  // Initialize Stylist Manager event listeners
+  initStylistsManager();
 
   // Run initial session check on boot
   checkSession();

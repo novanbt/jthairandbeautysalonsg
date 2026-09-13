@@ -1218,14 +1218,56 @@
     }
   }
 
+  // Dynamic Stylists Renderer from Admin Config
+  function syncDynamicStylists() {
+    try {
+      const defaultStylists = [
+        { name: 'Jessica Tan', role: 'Master Director', specialty: 'Extensions & Hair Transformation', active: true },
+        { name: 'Marcus Lee', role: 'Senior Colorist', specialty: 'Balayage & Creative Color', active: true },
+        { name: 'Chloe Wang', role: 'Lead Stylist', specialty: 'Editorial Waves & Scalp Spa', active: true },
+        { name: 'David Lim', role: 'Precision Specialist', specialty: 'Precision Cuts & Blowouts', active: true }
+      ];
+
+      let stylists = defaultStylists;
+      const saved = localStorage.getItem('jt_stylists_config');
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            stylists = parsed;
+          }
+        } catch(e) {}
+      }
+
+      const select = document.getElementById('preferredStylist');
+      if (select) {
+        const currentVal = select.value;
+        select.innerHTML = '<option value="Any Available Stylist">Any Available Stylist (First Available)</option>';
+        stylists.filter(s => s.active !== false).forEach(s => {
+          const opt = document.createElement('option');
+          opt.value = `${s.name} – ${s.role}`;
+          opt.textContent = `${s.name} – ${s.role} (${s.specialty})`;
+          select.appendChild(opt);
+        });
+        if (currentVal && Array.from(select.options).some(o => o.value === currentVal)) {
+          select.value = currentVal;
+        }
+      }
+    } catch(err) {
+      console.error('Error syncing dynamic stylists:', err);
+    }
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
     syncDynamicServices();
     syncDynamicSliders();
+    syncDynamicStylists();
 
     // Re-sync if updated from another tab
     window.addEventListener('storage', () => {
       syncDynamicServices();
       syncDynamicSliders();
+      syncDynamicStylists();
     });
 
     // Smooth scroll for internal anchor tags

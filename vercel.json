@@ -1,7 +1,14 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
-  "rewrites": [
-    { "source": "/admin", "destination": "/admin.html" }
+  "functions": {
+    "index.js": {
+      "includeFiles": "**"
+    }
+  },
+  "routes": [
+    { "src": "/admin", "dest": "/index.js" },
+    { "src": "/api/config", "dest": "/index.js" },
+    { "src": "/(.*)", "dest": "/index.js" }
   ]
 }

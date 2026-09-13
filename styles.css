@@ -1,0 +1,149 @@
+/* ==========================================================================
+   JT HAIR & BEAUTY SALON — STYLES
+   ========================================================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: #F9F5F0;
+  color: #1A1412;
+}
+
+body {
+  background-color: #F9F5F0;
+  color: #1A1412;
+  overflow-x: hidden;
+}
+
+/* Header Glassmorphism / Anti-scroll up */
+#siteHeader {
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  border-bottom: 1px solid transparent;
+}
+
+#siteHeader.scrolled {
+  background: rgba(249, 245, 240, 0.28);
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 30px rgba(26, 20, 18, 0.04);
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+/* ==========================================================================
+   SCROLL ANIMATION TRACK & STICKY CANVAS
+   ========================================================================== */
+.scroll-anim-track {
+  height: 350vh; /* Smooth, natural 350vh scroll duration for the 194 frames */
+  position: relative;
+  width: 100%;
+  background-color: #000;
+}
+
+.canvas-sticky-wrapper {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #000;
+}
+
+#sequenceCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+/* ==========================================================================
+   EDITORIAL TOUCHES & COMPARISON STYLING
+   ========================================================================== */
+.font-condensed-impact {
+  font-family: 'Anton', 'Oswald', 'Syne', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  font-weight: 400;
+}
+
+.badge-sparkle::after {
+  content: " ✦";
+  color: #E8B4B8;
+  font-size: 0.85em;
+}
+
+.badge-sparkle-dark::after {
+  content: " ✦";
+  color: #1A1412;
+  font-size: 0.85em;
+}
+
+/* Rotating circular badge animation */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 24s linear infinite;
+}
+
+/* Custom clip paths */
+.clip-circle {
+  clip-path: circle(50% at 50% 50%);
+}
+
+/* Custom slider styling for Before/After comparison */
+.comparison-range-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  outline: none;
+}
+
+.comparison-range-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  cursor: ew-resize;
+  box-shadow: 0 4px 14px rgba(26,20,18,0.25);
+  border: 2px solid #E8B4B8;
+}
+
+.comparison-range-slider::-moz-range-thumb {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  cursor: ew-resize;
+  box-shadow: 0 4px 14px rgba(26,20,18,0.25);
+  border: 2px solid #E8B4B8;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F9F5F0;
+}
+::-webkit-scrollbar-thumb {
+  background: #E8B4B8;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #D89BA1;
+}

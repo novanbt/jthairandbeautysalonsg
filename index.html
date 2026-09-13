@@ -1,0 +1,1692 @@
+<!DOCTYPE html><html class="scroll-smooth" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>JT Hair &amp; Beauty Salon SG | Luxury Editorial Hair &amp; Beauty</title>
+<!-- Tailwind CSS v3 with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Supabase JS Client & Integration -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabaseClient.js"></script>
+<!-- Google Fonts: Syne, Cormorant Garamond, Plus Jakarta Sans, Playfair Display -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&amp;family=Playfair+Display:ital,wght@1,400;1,600&amp;family=Syne:wght@700;800;900&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"><link class="" href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Oswald:wght@700;800&amp;display=swap" rel="stylesheet">
+<!-- Tailwind Configuration -->
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream: '#F9F5F0',
+            creamLight: '#FDFBF9',
+            espresso: '#1A1412',
+            espressoDark: '#120D0C',
+            blush: {
+              100: '#FBF0F2',
+              200: '#F7DDE2',
+              300: '#F2C4CE',
+              400: '#E8B4B8',
+              500: '#D89BA1',
+            }
+          },
+          fontFamily: {
+            heading: ['Syne', 'sans-serif'],
+            serif: ['Cormorant Garamond', 'serif'],
+            script: ['Playfair Display', 'serif'],
+            body: ['Plus Jakarta Sans', 'sans-serif'],
+          },
+          letterSpacing: {
+            tighter: '-0.05em',
+            tight: '-0.03em',
+            widest: '0.15em',
+          }
+        }
+      }
+    }
+  </script>
+<!-- Custom Styles for Editorial Touches -->
+<style data-purpose="typography-and-effects">
+    .font-condensed-impact {
+      font-family: 'Anton', 'Oswald', 'Syne', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      font-weight: 400;
+    }
+    .badge-sparkle::after {
+      content: " ✦";
+      color: #E8B4B8;
+      font-size: 0.85em;
+    }
+    .badge-sparkle-dark::after {
+      content: " ✦";
+      color: #1A1412;
+      font-size: 0.85em;
+    }
+    /* Rotating circular badge animation */
+    @keyframes spin-slow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .animate-spin-slow {
+      animation: spin-slow 24s linear infinite;
+    }
+    /* Custom clip paths */
+    .clip-circle {
+      clip-path: circle(50% at 50% 50%);
+    }
+    /* Custom slider styling for comparison */
+    .comparison-range-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      background: transparent;
+      outline: none;
+    }
+    .comparison-range-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      cursor: ew-resize;
+      box-shadow: 0 4px 14px rgba(26,20,18,0.25);
+      border: 2px solid #E8B4B8;
+    }
+    .comparison-range-slider::-moz-range-thumb {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      cursor: ew-resize;
+      box-shadow: 0 4px 14px rgba(26,20,18,0.25);
+      border: 2px solid #E8B4B8;
+    }
+
+    /* Infinite Services Marquee & Glide Carousel */
+    @keyframes services-marquee-glide {
+      0% {
+        transform: translateX(0%);
+      }
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+    .animate-marquee-infinite {
+      display: flex;
+      width: max-content;
+      animation: services-marquee-glide 32s linear infinite;
+    }
+    .animate-marquee-infinite:hover,
+    .animate-marquee-paused {
+      animation-play-state: paused;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="bg-cream text-espresso font-body antialiased selection:bg-blush-300 selection:text-espresso overflow-x-hidden" style="background-color: rgb(248, 236, 231);">
+<!-- BEGIN: Navigation -->
+<header class="absolute top-0 left-0 w-full z-50 px-6 md:px-12 lg:px-20 py-6" data-purpose="site-header" id="siteHeader">
+<div class="max-w-7xl mx-auto flex items-center justify-between">
+<!-- Brand Logo -->
+<a class="group flex flex-col leading-none" data-purpose="brand-logo" href="#">
+<div class="flex items-baseline space-x-1.5">
+<span class="font-serif text-3xl md:text-4xl font-bold tracking-tight text-espresso">JT</span>
+<span class="text-xs md:text-sm font-semibold tracking-widest uppercase text-espresso">Hair &amp; Beauty</span>
+</div>
+<span class="font-script italic text-base md:text-lg text-espresso/80 -mt-1 font-medium pl-6">Salon SG</span>
+</a>
+<nav class="hidden md:flex items-center space-x-8 lg:space-x-10" data-purpose="desktop-nav">
+<a class="group relative text-xs lg:text-sm font-semibold tracking-widest uppercase hover:text-blush-500 transition-colors py-1 inline-block" href="#home">
+  Home
+  <span class="absolute bottom-0 left-0 w-full h-[2px] bg-blush-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left ease-linear"></span>
+</a>
+<a class="group relative text-xs lg:text-sm font-semibold tracking-widest uppercase hover:text-blush-500 transition-colors py-1 inline-block" href="#services">
+  Services
+  <span class="absolute bottom-0 left-0 w-full h-[2px] bg-blush-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left ease-linear"></span>
+</a>
+<a class="group relative text-xs lg:text-sm font-semibold tracking-widest uppercase text-blush-300 hover:text-blush-500 transition-colors py-1 inline-block" href="#location">
+  Location
+  <span class="absolute bottom-0 left-0 w-full h-[2px] bg-blush-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left ease-linear"></span>
+</a>
+<a class="group relative text-xs lg:text-sm font-semibold tracking-widest uppercase text-blush-300 hover:text-blush-500 transition-colors py-1 inline-block" href="#about">
+  About
+  <span class="absolute bottom-0 left-0 w-full h-[2px] bg-blush-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left ease-linear"></span>
+</a>
+</nav>
+<!-- Booking CTA Button -->
+<div class="flex items-center space-x-4">
+<a class="inline-flex items-center justify-center px-6 py-2.5 rounded-full bg-blush-300 text-espresso text-xs md:text-sm font-semibold tracking-wider uppercase hover:bg-blush-400 transition-all shadow-sm hover:scale-105 active:scale-95 duration-200" href="#book">
+          Book Now
+        </a>
+</div>
+</div>
+</header>
+<!-- END: Navigation -->
+<!-- BEGIN: Hero Section -->
+<section class="relative min-h-[92vh] md:min-h-screen flex items-center pt-24 pb-16 px-6 md:px-12 lg:px-20 bg-cream" data-purpose="hero-section" id="home" style="background-color: rgb(248, 236, 231); background-image: url('hero-image.jpg'); background-size: cover; background-position: right center; background-repeat: no-repeat;">
+<!-- Hero Background Graphic / Portrait Alignment Container -->
+<div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-10 items-center relative z-10">
+<!-- Left Column: Editorial Headline & Copy -->
+<div class="lg:col-span-6 flex flex-col justify-center pt-8 md:pt-16">
+<!-- Eyebrow Pill -->
+<div class="inline-flex items-center space-x-1.5 mb-6">
+<span class="text-xs md:text-sm font-bold tracking-widest uppercase text-espresso/90 flex items-center">
+            Welcome to JT Hair &amp; Beauty Salon sg<span class="text-blush-400 ml-1.5 text-base leading-none">✦</span>
+</span>
+</div>
+<!-- Big Bold Display Typography -->
+<h1 class="text-7xl sm:text-8xl md:text-9xl lg:text-[7rem] leading-[0.88] font-condensed-impact uppercase text-espresso mb-3" style="font-family: Anton, Oswald, sans-serif; letter-spacing: 0.02em; font-weight: 400;">
+          YOUR HAIR.<br>
+<span class="text-blush-400">YOUR ERA.</span>
+</h1>
+<!-- Secondary Motto -->
+<p class="text-xs md:text-sm uppercase tracking-widest font-semibold text-espresso/70 mb-8 mt-2">
+          Cut. Color. Confidence.
+        </p>
+<!-- CTA Button -->
+<div>
+<a class="inline-flex items-center space-x-3 px-8 py-3.5 rounded-full bg-espresso text-cream text-xs md:text-sm font-bold tracking-wider uppercase hover:bg-espresso/90 hover:scale-105 transition-all duration-200 group shadow-lg" href="#book">
+<span class="">Book Your Look</span>
+<span class="transition-transform group-hover:translate-x-1 duration-200">→</span>
+</a>
+</div>
+</div>
+<!-- Right Column: Model Visual with Circular Seal -->
+<div class="lg:col-span-6 relative flex justify-center lg:justify-end items-center"><div class="relative w-full h-full min-h-[450px] lg:min-h-[600px] flex items-end justify-end pointer-events-none"><div class="pointer-events-auto absolute bottom-0 right-4 lg:right-16 translate-y-1/2 z-20" data-purpose="trending-badge"><div class="relative w-32 h-32 md:w-36 md:h-36 flex items-center justify-center"><svg class="absolute inset-0 w-full h-full animate-spin-slow" viewBox="0 0 160 160"><defs><path d="M 80, 80 m -62, 0 a 62,62 0 1,1 124,0 a 62,62 0 1,1 -124,0" fill="none" id="circlePath"></path></defs><text fill="#1A1412" font-family="'Plus Jakarta Sans', sans-serif" font-size="10.5" font-weight="700" letter-spacing="3"><textPath href="#circlePath" startOffset="0%">✦ TRENDING ✦ NEW LOOKS ✦ THIS SEASON</textPath></text></svg><div class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-blush-300 shadow-md flex flex-col items-center justify-center text-center p-2 border border-blush-400"><span class="text-[9px] md:text-[10px] font-black uppercase tracking-tight leading-tight text-espresso">NEW</span><span class="text-[9px] md:text-[10px] font-black uppercase tracking-tight leading-tight text-espresso">LOOKS</span></div></div></div></div></div>
+</div>
+</section>
+<!-- END: Hero Section -->
+<!-- BEGIN: Our Services Section -->
+<section class="py-20 px-4 sm:px-6 md:px-12 lg:px-20 bg-cream overflow-hidden" data-purpose="services-section" id="services" style="background-color: rgb(248, 236, 231);">
+<div class="max-w-7xl mx-auto">
+
+<!-- Section Header & Controls -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4 px-2">
+  <div>
+    <div class="inline-flex items-center px-4 py-1.5 rounded-full bg-blush-200 text-espresso text-xs font-bold tracking-widest uppercase mb-3">
+      <span id="servicesTagText">Our Services</span> <span id="servicesTagIcon" class="text-blush-400 ml-1.5 text-sm">✦</span>
+    </div>
+    <h2 class="text-4xl sm:text-6xl md:text-7xl font-condensed-impact uppercase text-espresso leading-none flex items-center gap-2" style="font-family: Anton, Oswald, sans-serif; letter-spacing: 0.02em; font-weight: 400;">
+      SIGNATURE SERVICES <span class="text-blush-400 text-3xl sm:text-5xl">✦</span>
+    </h2>
+    <p class="text-xs sm:text-sm font-medium tracking-wide text-espresso/70 mt-2 max-w-xl">
+      Glide through our bespoke salon offerings. Hover over any look to pause and book your appointment.
+    </p>
+  </div>
+
+  <!-- Interactive Controls & Status Pill -->
+  <div class="flex items-center gap-3">
+    <span class="hidden sm:inline-flex items-center px-3.5 py-1.5 rounded-full bg-espresso/5 border border-espresso/10 text-[10px] font-bold uppercase tracking-widest text-espresso/60">
+      <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse mr-2"></span> Continuous Runway
+    </span>
+    <button id="servicesPrevBtn" aria-label="Previous Services" class="w-11 h-11 rounded-full bg-creamLight border border-blush-200 hover:border-blush-400 text-espresso hover:bg-blush-300 transition-all flex items-center justify-center text-base font-black shadow-sm cursor-pointer hover:scale-105 active:scale-95 duration-150">
+      ←
+    </button>
+    <button id="servicesNextBtn" aria-label="Next Services" class="w-11 h-11 rounded-full bg-creamLight border border-blush-200 hover:border-blush-400 text-espresso hover:bg-blush-300 transition-all flex items-center justify-center text-base font-black shadow-sm cursor-pointer hover:scale-105 active:scale-95 duration-150">
+      →
+    </button>
+  </div>
+</div>
+
+<!-- Continuous Single-Line Infinite Marquee Runway -->
+<div class="relative w-full overflow-hidden select-none" id="servicesCarouselViewport">
+  <!-- Subtle Editorial Side Gradient Fades -->
+  <div class="absolute top-0 bottom-0 left-0 w-8 sm:w-20 bg-gradient-to-r from-cream via-cream/80 to-transparent z-20 pointer-events-none"></div>
+  <div class="absolute top-0 bottom-0 right-0 w-8 sm:w-20 bg-gradient-to-l from-cream via-cream/80 to-transparent z-20 pointer-events-none"></div>
+
+  <!-- Infinite Flowing Track -->
+  <div id="servicesMarqueeTrack" class="w-max flex gap-6 sm:gap-8 items-center py-4 cursor-grab active:cursor-grabbing">
+    <!-- Populated dynamically via syncDynamicServices -->
+  </div>
+</div>
+
+</div>
+</section>
+<!-- END: Our Services Section -->
+<!-- BEGIN: Before & After Section -->
+<section class="py-20 px-6 md:px-12 lg:px-20 bg-cream" data-purpose="before-and-after-section" id="looks" style="background-color: rgb(248, 236, 231);">
+<div class="max-w-7xl mx-auto">
+<!-- Section Header & Story Line -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+<div>
+<div class="inline-flex items-center px-4 py-1.5 rounded-full bg-blush-200 text-espresso text-xs font-bold tracking-widest uppercase mb-4">
+      Transformation Showcase <span class="text-blush-400 ml-1.5 text-sm">✦</span>
+</div>
+<h2 id="baHeadlineText" class="text-5xl sm:text-7xl md:text-8xl font-condensed-impact uppercase text-espresso leading-none flex items-center whitespace-nowrap" style="font-family: Anton, Oswald, sans-serif; letter-spacing: 0.02em; font-weight: 400;">
+      BEFORE &amp; AFTER <span class="text-blush-400 ml-3 text-3xl sm:text-5xl flex-shrink-0">✦</span>
+</h2>
+<p id="baSubtitleText" class="text-sm md:text-base font-medium tracking-wide text-espresso/75 mt-3">
+      Real transformations. Real confidence.
+    </p>
+</div>
+<div class="flex items-center gap-3">
+  <a href="admin.html" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-espresso text-cream text-xs font-bold uppercase tracking-wider hover:bg-espresso/85 transition-all shadow-sm hover:scale-105 active:scale-95 duration-200">
+    <span>🔐 Admin: Manage &amp; Add Sliders</span>
+    <span class="text-blush-300">↗</span>
+  </a>
+</div>
+</div>
+<!-- Vertical Stack of 3 Transformation Cards -->
+<div class="flex flex-col space-y-10" id="ba-vertical-cards-wrapper">
+<!-- Card 1: 01 / Silk Straight & Gloss (Before: before-1.png, After: after-1.png) -->
+<div class="bg-creamLight rounded-3xl p-5 sm:p-7 lg:p-8 border border-blush-200/70 shadow-xl relative transition-all duration-300 hover:shadow-2xl">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between pb-5 border-b border-blush-200/50 mb-6 gap-3">
+<div>
+<span class="text-xs font-bold uppercase tracking-widest text-blush-500">Look 01 of 03</span>
+<h3 class="text-2xl sm:text-3xl font-condensed-impact text-espresso uppercase tracking-tight" style="font-family: Anton, Oswald, sans-serif;">
+          01 / Silk Straight &amp; Gloss
+        </h3>
+</div>
+<div class="text-xs tracking-wider uppercase text-espresso/60 font-medium flex items-center gap-2">
+<span class="">Drag slider horizontally</span>
+<span class="text-blush-400 font-bold">⇄</span>
+</div>
+</div>
+<!-- Interactive Comparison Container -->
+<div class="relative w-full aspect-[4/3] sm:aspect-[16/9] lg:aspect-[21/9] rounded-2xl overflow-hidden bg-espresso select-none shadow-inner comparison-widget">
+<!-- AFTER Image (Underneath, Full Width) -->
+<img alt="After - Silk Straight &amp; Gloss" class="absolute inset-0 w-full h-full object-cover pointer-events-none" src="after-1.png">
+<!-- AFTER Pill Badge -->
+<span class="absolute top-4 right-4 z-10 px-4 py-1.5 rounded-full bg-espresso/85 text-cream text-[11px] font-black uppercase tracking-widest backdrop-blur-sm shadow border border-white/20">
+        AFTER ✦
+      </span>
+<!-- BEFORE Image (Clipped on top) -->
+<div class="comparison-before-layer absolute inset-0 overflow-hidden pointer-events-none" style="width: 50%;">
+<div class="relative w-full h-full" style="width: 200%;">
+<img alt="Before - Silk Straight &amp; Gloss" class="absolute inset-0 w-full h-full object-cover" src="before-1.png">
+</div>
+<!-- BEFORE Pill Badge -->
+<span class="absolute top-4 left-4 z-10 px-4 py-1.5 rounded-full bg-creamLight/95 text-espresso text-[11px] font-black uppercase tracking-widest backdrop-blur-sm shadow border border-blush-300">
+          ✦ BEFORE
+        </span>
+</div>
+<!-- Vertical Divider Line & Draggable Handle Knob -->
+<div class="comparison-divider absolute top-0 bottom-0 pointer-events-none z-20 flex items-center justify-center" style="left: 50%;">
+<div class="w-[3px] h-full bg-cream shadow-[0_0_8px_rgba(0,0,0,0.4)]"></div>
+<div class="absolute w-11 h-11 rounded-full bg-cream border-2 border-blush-400 shadow-xl flex items-center justify-center text-espresso text-xs font-black">
+<span class="tracking-tighter">◂ ▸</span>
+</div>
+</div>
+<!-- Range Input Overlaid for native smooth dragging & accessibility -->
+<input aria-label="Compare Before and After 01 Silk Straight and Gloss" class="comparison-range-slider absolute inset-0 w-full h-full opacity-0 cursor-ew-resize z-30" max="100" min="0" type="range" value="50">
+</div>
+</div>
+<!-- Card 2: 02 / Rich Brunette Waves (Before: before-2.png, After: after-2.png) -->
+<div class="bg-creamLight rounded-3xl p-5 sm:p-7 lg:p-8 border border-blush-200/70 shadow-xl relative transition-all duration-300 hover:shadow-2xl">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between pb-5 border-b border-blush-200/50 mb-6 gap-3">
+<div>
+<span class="text-xs font-bold uppercase tracking-widest text-blush-500">Look 02 of 03</span>
+<h3 class="text-2xl sm:text-3xl font-condensed-impact text-espresso uppercase tracking-tight" style="font-family: Anton, Oswald, sans-serif;">
+          02 / Rich Brunette Waves
+        </h3>
+</div>
+<div class="text-xs tracking-wider uppercase text-espresso/60 font-medium flex items-center gap-2">
+<span class="">Drag slider horizontally</span>
+<span class="text-blush-400 font-bold">⇄</span>
+</div>
+</div>
+<!-- Interactive Comparison Container -->
+<div class="relative w-full aspect-[4/3] sm:aspect-[16/9] lg:aspect-[21/9] rounded-2xl overflow-hidden bg-espresso select-none shadow-inner comparison-widget">
+<!-- AFTER Image (Underneath, Full Width) -->
+<img alt="After - Rich Brunette Waves" class="absolute inset-0 w-full h-full object-cover pointer-events-none" src="after-2.png">
+<!-- AFTER Pill Badge -->
+<span class="absolute top-4 right-4 z-10 px-4 py-1.5 rounded-full bg-espresso/85 text-cream text-[11px] font-black uppercase tracking-widest backdrop-blur-sm shadow border border-white/20">
+        AFTER ✦
+      </span>
+<!-- BEFORE Image (Clipped on top) -->
+<div class="comparison-before-layer absolute inset-0 overflow-hidden pointer-events-none" style="width: 50%;">
+<div class="relative w-full h-full" style="width: 200%;">
+<img alt="Before - Rich Brunette Waves" class="absolute inset-0 w-full h-full object-cover" src="before-2.png">
+</div>
+<!-- BEFORE Pill Badge -->
+<span class="absolute top-4 left-4 z-10 px-4 py-1.5 rounded-full bg-creamLight/95 text-espresso text-[11px] font-black uppercase tracking-widest backdrop-blur-sm shadow border border-blush-300">
+          ✦ BEFORE
+        </span>
+</div>
+<!-- Vertical Divider Line & Draggable Handle Knob -->
+<div class="comparison-divider absolute top-0 bottom-0 pointer-events-none z-20 flex items-center justify-center" style="left: 50%;">
+<div class="w-[3px] h-full bg-cream shadow-[0_0_8px_rgba(0,0,0,0.4)]"></div>
+<div class="absolute w-11 h-11 rounded-full bg-cream border-2 border-blush-400 shadow-xl flex items-center justify-center text-espresso text-xs font-black">
+<span class="tracking-tighter">◂ ▸</span>
+</div>
+</div>
+<!-- Range Input Overlaid for native smooth dragging & accessibility -->
+<input aria-label="Compare Before and After 02 Rich Brunette Waves" class="comparison-range-slider absolute inset-0 w-full h-full opacity-0 cursor-ew-resize z-30" max="100" min="0" type="range" value="50">
+</div>
+</div>
+<!-- Card 3: 03 / Golden Balayage Melt & Curls (Before: before-3.png, After: after-3.png) -->
+<div class="bg-creamLight rounded-3xl p-5 sm:p-7 lg:p-8 border border-blush-200/70 shadow-xl relative transition-all duration-300 hover:shadow-2xl">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between pb-5 border-b border-blush-200/50 mb-6 gap-3">
+<div>
+<span class="text-xs font-bold uppercase tracking-widest text-blush-500">Look 03 of 03</span>
+<h3 class="text-2xl sm:text-3xl font-condensed-impact text-espresso uppercase tracking-tight" style="font-family: Anton, Oswald, sans-serif;">
+          03 / Golden Balayage Melt &amp; Curls
+        </h3>
+</div>
+<div class="text-xs tracking-wider uppercase text-espresso/60 font-medium flex items-center gap-2">
+<span class="">Drag slider horizontally</span>
+<span class="text-blush-400 font-bold">⇄</span>
+</div>
+</div>
+<!-- Interactive Comparison Container -->
+<div class="relative w-full aspect-[4/3] sm:aspect-[16/9] lg:aspect-[21/9] rounded-2xl overflow-hidden bg-espresso select-none shadow-inner comparison-widget">
+<!-- AFTER Image (Underneath, Full Width) -->
+<img alt="After - Golden Balayage Melt &amp; Curls" class="absolute inset-0 w-full h-full object-cover pointer-events-none" src="after-3.png">
+<!-- AFTER Pill Badge -->
+<span class="absolute top-4 right-4 z-10 px-4 py-1.5 rounded-full bg-espresso/85 text-cream text-[11px] font-black uppercase tracking-widest backdrop-blur-sm shadow border border-white/20">
+        AFTER ✦
+      </span>
+<!-- BEFORE Image (Clipped on top) -->
+<div class="comparison-before-layer absolute inset-0 overflow-hidden pointer-events-none" style="width: 50%;">
+<div class="relative w-full h-full" style="width: 200%;">
+<img alt="Before - Golden Balayage Melt &amp; Curls" class="absolute inset-0 w-full h-full object-cover" src="before-3.png">
+</div>
+<!-- BEFORE Pill Badge -->
+<span class="absolute top-4 left-4 z-10 px-4 py-1.5 rounded-full bg-creamLight/95 text-espresso text-[11px] font-black uppercase tracking-widest backdrop-blur-sm shadow border border-blush-300">
+          ✦ BEFORE
+        </span>
+</div>
+<!-- Vertical Divider Line & Draggable Handle Knob -->
+<div class="comparison-divider absolute top-0 bottom-0 pointer-events-none z-20 flex items-center justify-center" style="left: 50%;">
+<div class="w-[3px] h-full bg-cream shadow-[0_0_8px_rgba(0,0,0,0.4)]"></div>
+<div class="absolute w-11 h-11 rounded-full bg-cream border-2 border-blush-400 shadow-xl flex items-center justify-center text-espresso text-xs font-black">
+<span class="tracking-tighter">◂ ▸</span>
+</div>
+</div>
+<!-- Range Input Overlaid for native smooth dragging & accessibility -->
+<input aria-label="Compare Before and After 03 Golden Balayage Melt and Curls" class="comparison-range-slider absolute inset-0 w-full h-full opacity-0 cursor-ew-resize z-30" max="100" min="0" type="range" value="50">
+</div>
+</div>
+</div>
+<!-- Bottom Action Button -->
+<div class="flex justify-center mt-12">
+<a class="inline-flex items-center space-x-2.5 px-9 py-4 rounded-full bg-espresso text-cream text-xs sm:text-sm font-bold tracking-wider uppercase hover:bg-espresso/90 hover:scale-105 transition-all shadow-xl" href="#book">
+<span class="">Book Your Transformation</span>
+<span class="">→</span>
+</a>
+</div>
+</div>
+</section>
+<!-- END: Before & After Section -->
+
+<!-- BEGIN: Location & Google Maps Section -->
+<section class="py-20 px-6 md:px-12 lg:px-20 bg-cream relative" data-purpose="location-section" id="location" style="background-color: rgb(248, 236, 231);">
+<div class="max-w-7xl mx-auto">
+<!-- Section Header -->
+<div class="flex flex-col mb-12">
+<div>
+<div class="inline-flex items-center px-4 py-1.5 rounded-full bg-blush-200 text-espresso text-xs font-bold tracking-widest uppercase mb-4">
+      Visit Our Studio <span class="text-blush-400 ml-1.5 text-sm">✦</span>
+</div>
+<h2 class="text-5xl sm:text-7xl md:text-8xl font-condensed-impact uppercase text-espresso leading-none flex items-center flex-wrap gap-2" style="font-family: Anton, Oswald, sans-serif; letter-spacing: 0.02em; font-weight: 400;">
+      FIND OUR SALON <span class="text-blush-400 text-3xl sm:text-5xl flex-shrink-0">✦</span>
+</h2>
+<p class="text-sm md:text-base font-medium tracking-wide text-espresso/75 mt-3 max-w-2xl">
+      Step into our luxury hair sanctuary in Singapore. Experience premier seamless hair extensions, custom balayage, and editorial styling.
+</p>
+</div>
+</div>
+
+<!-- Main 2-Column Content Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
+
+<!-- Left Column: Salon Details & Quick Actions -->
+<div class="lg:col-span-5 flex flex-col justify-between space-y-6">
+
+<!-- Info Card: Salon Identity & Details -->
+<div class="bg-creamLight rounded-3xl p-6 sm:p-8 border border-blush-200/80 shadow-xl flex-1 flex flex-col justify-between relative overflow-hidden">
+<!-- Subtle decorative background accent -->
+<div class="absolute -top-12 -right-12 w-32 h-32 bg-blush-200/40 rounded-full blur-2xl pointer-events-none"></div>
+
+<div>
+<div class="flex items-center justify-between mb-4">
+  <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-[11px] font-bold tracking-wider uppercase">
+    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+    Open Daily
+  </span>
+  <span class="text-xs font-bold uppercase tracking-widest text-blush-500">Singapore</span>
+</div>
+
+<h3 class="text-2xl sm:text-3xl font-condensed-impact text-espresso uppercase tracking-tight mb-2" style="font-family: Anton, Oswald, sans-serif;">
+  JT Hair &amp; Beauty Salon SG
+</h3>
+<p class="text-xs sm:text-sm font-script italic text-espresso/70 mb-6">
+  Best Hair Extension &amp; Luxury Editorial Hairdressing
+</p>
+
+<!-- Detailed Info Items -->
+<div class="space-y-4 text-xs sm:text-sm text-espresso/85 border-t border-blush-200/60 pt-5">
+
+  <!-- Address -->
+  <div class="flex items-start gap-3.5">
+    <div class="w-9 h-9 rounded-2xl bg-blush-200 flex items-center justify-center text-espresso flex-shrink-0 mt-0.5 shadow-sm">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+      </svg>
+    </div>
+    <div>
+      <h4 class="font-bold uppercase tracking-wider text-xs text-espresso">Studio Address</h4>
+      <p class="text-espresso/75 font-medium leading-relaxed mt-0.5">
+        JT Hair &amp; Beauty Salon SG, Singapore
+      </p>
+    </div>
+  </div>
+
+  <!-- Opening Hours -->
+  <div class="flex items-start gap-3.5">
+    <div class="w-9 h-9 rounded-2xl bg-blush-200 flex items-center justify-center text-espresso flex-shrink-0 mt-0.5 shadow-sm">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+      </svg>
+    </div>
+    <div>
+      <h4 class="font-bold uppercase tracking-wider text-xs text-espresso">Working Hours</h4>
+      <p class="text-espresso/75 font-medium leading-relaxed mt-0.5">
+        Mon – Sun: 10:30 AM – 8:30 PM
+      </p>
+    </div>
+  </div>
+
+  <!-- Specialties -->
+  <div class="flex items-start gap-3.5">
+    <div class="w-9 h-9 rounded-2xl bg-blush-200 flex items-center justify-center text-espresso flex-shrink-0 mt-0.5 shadow-sm">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+      </svg>
+    </div>
+    <div>
+      <h4 class="font-bold uppercase tracking-wider text-xs text-espresso">Specialties</h4>
+      <p class="text-espresso/75 font-medium leading-relaxed mt-0.5">
+        Seamless Hair Extensions · Custom Balayage · Scalp Spa · Keratin Straightening
+      </p>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- Action Buttons Inside Card -->
+<div class="pt-6 border-t border-blush-200/60 mt-6 flex flex-col sm:flex-row gap-3">
+<a class="flex-1 inline-flex items-center justify-center space-x-2 px-6 py-3.5 rounded-full bg-espresso text-cream text-xs font-bold tracking-wider uppercase hover:bg-espresso/90 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-md group" href="https://maps.app.goo.gl/VhgyhS3G3aU1mBE38" rel="noopener noreferrer" target="_blank">
+  <span>Open in Google Maps</span>
+  <span class="transition-transform group-hover:translate-x-1 duration-200">↗</span>
+</a>
+<a class="inline-flex items-center justify-center px-6 py-3.5 rounded-full bg-blush-300 text-espresso text-xs font-bold tracking-wider uppercase hover:bg-blush-400 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-sm" href="#book">
+  <span>Book Look</span>
+</a>
+</div>
+
+</div>
+
+</div>
+
+<!-- Right Column: Interactive Embedded Map Container -->
+<div class="lg:col-span-7 flex flex-col">
+<div class="relative w-full h-[420px] sm:h-[480px] lg:h-full min-h-[420px] rounded-3xl overflow-hidden border border-blush-200/80 shadow-2xl bg-espresso/5 group">
+
+<!-- Top Floating Tag -->
+<div class="absolute top-4 left-4 z-20 pointer-events-none">
+<span class="px-4 py-2 rounded-full bg-creamLight/95 text-espresso text-[11px] font-black uppercase tracking-widest backdrop-blur-md shadow-lg border border-blush-300 flex items-center gap-2">
+  <span class="w-2 h-2 rounded-full bg-blush-500"></span>
+  Live Google Map Locator
+</span>
+</div>
+
+<!-- Bottom Right Floating Navigation Pill -->
+<a class="absolute bottom-4 right-4 z-20 px-5 py-2.5 rounded-full bg-espresso/90 text-cream text-xs font-bold tracking-wider uppercase backdrop-blur-md shadow-xl border border-white/20 hover:bg-espresso hover:scale-105 transition-all duration-200 flex items-center gap-2" href="https://maps.app.goo.gl/VhgyhS3G3aU1mBE38" rel="noopener noreferrer" target="_blank">
+  <span>Get Directions</span>
+  <span>📍</span>
+</a>
+
+<!-- Interactive Google Maps Iframe -->
+<iframe
+  allowfullscreen=""
+  class="w-full h-full border-0 absolute inset-0 filter saturate-[1.05]"
+  loading="lazy"
+  referrerpolicy="no-referrer-when-downgrade"
+  src="https://maps.google.com/maps?q=JT+Hair+%26+Beauty+Salon+SG+%7C+Best+Hair+Extension+Singapore&amp;t=&amp;z=16&amp;ie=UTF8&amp;iwloc=&amp;output=embed"
+  title="JT Hair &amp; Beauty Salon SG Google Map Location">
+</iframe>
+
+</div>
+</div>
+
+</div>
+</div>
+</section>
+<!-- END: Location & Google Maps Section -->
+
+<!-- BEGIN: Minimal Salon Booking Form Section -->
+<section class="py-20 px-6 md:px-12 lg:px-20 bg-cream relative" data-purpose="booking-section" id="book" style="background-color: rgb(248, 236, 231);">
+<div class="max-w-7xl mx-auto">
+
+<!-- Section Header -->
+<div class="flex flex-col mb-12">
+  <div>
+    <div class="inline-flex items-center px-4 py-1.5 rounded-full bg-blush-200 text-espresso text-xs font-bold tracking-widest uppercase mb-4">
+      Minimal Salon Booking Form <span class="text-blush-400 ml-1.5 text-sm">✦</span>
+    </div>
+    <h2 class="text-5xl sm:text-7xl md:text-8xl font-condensed-impact uppercase text-espresso leading-none flex items-center flex-wrap gap-2" style="font-family: Anton, Oswald, sans-serif; letter-spacing: 0.02em; font-weight: 400;">
+      BOOK YOUR APPOINTMENT <span class="text-blush-400 text-3xl sm:text-5xl flex-shrink-0">✦</span>
+    </h2>
+    <p class="text-sm md:text-base font-medium tracking-wide text-espresso/75 mt-3 max-w-2xl">
+      Choose your signature service, pick your preferred date, and choose from live available time slots during our salon hours.
+    </p>
+  </div>
+</div>
+
+<!-- Main 2-Column Booking Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+
+  <!-- Left Column: Salon Experience & Booking Highlights (4 cols) -->
+  <div class="lg:col-span-4 flex flex-col space-y-6">
+    <div class="bg-creamLight rounded-3xl p-6 sm:p-8 border border-blush-200/80 shadow-xl relative overflow-hidden">
+      <!-- Glow Accent -->
+      <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-blush-300/30 rounded-full blur-2xl pointer-events-none"></div>
+
+      <div class="flex items-center justify-between mb-4">
+        <span class="text-xs font-bold uppercase tracking-widest text-blush-500">Editorial Salon</span>
+        <span class="inline-flex items-center gap-1 text-xs font-bold text-amber-700 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200/60">
+          ★ 5.0 Rating
+        </span>
+      </div>
+
+      <h3 class="text-2xl sm:text-3xl font-condensed-impact text-espresso uppercase tracking-tight mb-2" style="font-family: Anton, Oswald, sans-serif;">
+        JT Hair &amp; Beauty Salon SG
+      </h3>
+      <p class="text-xs sm:text-sm font-script italic text-espresso/70 mb-6">
+        Singapore's Premier Hair Extension &amp; Beauty Sanctuary
+      </p>
+
+      <!-- Guarantees & Features -->
+      <div class="space-y-4 text-xs sm:text-sm text-espresso/85 border-t border-blush-200/60 pt-5">
+        <div class="flex items-start gap-3">
+          <span class="text-blush-400 text-base leading-none mt-0.5">✦</span>
+          <div>
+            <h4 class="font-bold text-espresso text-xs uppercase tracking-wider">Dynamic Availability</h4>
+            <p class="text-espresso/70 text-xs mt-0.5">Slots automatically update based on selected service duration.</p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-3">
+          <span class="text-blush-400 text-base leading-none mt-0.5">✦</span>
+          <div>
+            <h4 class="font-bold text-espresso text-xs uppercase tracking-wider">Bespoke 1-on-1 Consultation</h4>
+            <p class="text-espresso/70 text-xs mt-0.5">Custom color match, texture analysis, and styling advice.</p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-3">
+          <span class="text-blush-400 text-base leading-none mt-0.5">✦</span>
+          <div>
+            <h4 class="font-bold text-espresso text-xs uppercase tracking-wider">Salon Hours</h4>
+            <p class="text-espresso/70 text-xs mt-0.5">Monday – Sunday · 10:30 AM – 8:30 PM</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Contact Box -->
+      <div class="mt-6 pt-5 border-t border-blush-200/60 bg-cream/60 -mx-6 sm:-mx-8 -mb-6 sm:-mb-8 p-6 rounded-b-3xl">
+        <p class="text-xs text-espresso/70 mb-1 font-medium">Need immediate assistance or bespoke booking?</p>
+        <a class="inline-flex items-center gap-1.5 text-xs font-bold text-espresso hover:text-blush-500 transition-colors uppercase tracking-wider" href="https://maps.app.goo.gl/VhgyhS3G3aU1mBE38" target="_blank" rel="noopener noreferrer">
+          <span>Get Studio Directions</span>
+          <span>↗</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Column: Interactive Form Card (8 cols) -->
+  <div class="lg:col-span-8">
+    <div class="bg-creamLight rounded-3xl p-6 sm:p-10 border border-blush-200/90 shadow-2xl relative">
+      
+      <!-- FORM CONTAINER -->
+      <form class="space-y-6" id="salonBookingForm" novalidate>
+        
+        <!-- Row 1: Full Name & Phone Number -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <!-- Full Name -->
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-espresso mb-2" for="fullName">
+              Full Name <span class="text-blush-500">*</span>
+            </label>
+            <input
+              autocomplete="name"
+              class="w-full px-4 py-3.5 rounded-2xl bg-cream border border-blush-200 text-espresso text-sm placeholder-espresso/40 focus:outline-none focus:ring-2 focus:ring-blush-400 focus:border-blush-400 transition-all shadow-inner"
+              id="fullName"
+              name="fullName"
+              placeholder="Enter your name"
+              required
+              type="text">
+            <p class="text-[11px] text-red-500 mt-1 hidden" id="fullNameError">Please enter your full name.</p>
+          </div>
+
+          <!-- Phone Number -->
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-espresso mb-2" for="phoneNumber">
+              Phone Number <span class="text-blush-500">*</span>
+            </label>
+            <input
+              autocomplete="tel"
+              class="w-full px-4 py-3.5 rounded-2xl bg-cream border border-blush-200 text-espresso text-sm placeholder-espresso/40 focus:outline-none focus:ring-2 focus:ring-blush-400 focus:border-blush-400 transition-all shadow-inner"
+              id="phoneNumber"
+              name="phoneNumber"
+              placeholder="+65 XXXX XXXX"
+              required
+              type="tel">
+            <p class="text-[11px] text-red-500 mt-1 hidden" id="phoneNumberError">Please enter a valid contact phone number.</p>
+          </div>
+        </div>
+
+        <!-- Row 2: Select Service & Preferred Date -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <!-- Select Service -->
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-espresso mb-2" for="serviceSelect">
+              Select Service <span class="text-blush-500">*</span>
+            </label>
+            <div class="relative">
+              <select
+                class="w-full px-4 py-3.5 rounded-2xl bg-cream border border-blush-200 text-espresso text-sm focus:outline-none focus:ring-2 focus:ring-blush-400 focus:border-blush-400 transition-all shadow-inner appearance-none pr-10 cursor-pointer font-medium"
+                id="serviceSelect"
+                name="service"
+                required>
+                <option disabled selected value="">Choose a service</option>
+                <optgroup label="MEN">
+                  <option data-duration="30" value="Men – Cut Only — 15">Men – Cut Only — 15</option>
+                  <option data-duration="45" value="Men – Wash &amp; Cut — 20">Men – Wash &amp; Cut — 20</option>
+                </optgroup>
+                <optgroup label="LADIES">
+                  <option data-duration="30" value="Ladies – Cut Only — 20">Ladies – Cut Only — 20</option>
+                  <option data-duration="45" value="Ladies – Wash &amp; Cut — 25">Ladies – Wash &amp; Cut — 25</option>
+                </optgroup>
+                <optgroup label="HAIR SERVICES">
+                  <option data-duration="90" value="Colour — 58+">Colour — 58+</option>
+                  <option data-duration="90" value="Cold Perm — 58+">Cold Perm — 58+</option>
+                  <option data-duration="120" value="Setting Perm — 108+">Setting Perm — 108+</option>
+                  <option data-duration="120" value="Volume Rebonding — 78+">Volume Rebonding — 78+</option>
+                  <option data-duration="60" value="Hair Treatment — 38+">Hair Treatment — 38+</option>
+                  <option data-duration="60" value="Scalp Treatment — 58+">Scalp Treatment — 58+</option>
+                  <option data-duration="90" value="Keratin Treatment — 108+">Keratin Treatment — 108+</option>
+                  <option data-duration="90" value="Hair Extensions — From 1+ / strand">Hair Extensions — From 1+ / strand</option>
+                </optgroup>
+                <optgroup label="OTHER SERVICES">
+                  <option data-duration="15" value="Eyebrow Trim — 8">Eyebrow Trim — 8</option>
+                </optgroup>
+              </select>
+              <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-espresso/60">
+                ▼
+              </div>
+            </div>
+            <p class="text-[11px] text-red-500 mt-1 hidden" id="serviceSelectError">Please choose a service.</p>
+          </div>
+
+          <!-- Preferred Date -->
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-espresso mb-2" for="preferredDate">
+              Preferred Date <span class="text-blush-500">*</span>
+            </label>
+            <input
+              class="w-full px-4 py-3.5 rounded-2xl bg-cream border border-blush-200 text-espresso text-sm focus:outline-none focus:ring-2 focus:ring-blush-400 focus:border-blush-400 transition-all shadow-inner cursor-pointer"
+              id="preferredDate"
+              name="preferredDate"
+              required
+              type="date">
+            <p class="text-[11px] text-red-500 mt-1 hidden" id="preferredDateError">Please pick a valid booking date.</p>
+          </div>
+        </div>
+
+        <!-- Row 3: Dynamic Preferred Time Slot Selector -->
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <label class="block text-xs font-bold uppercase tracking-wider text-espresso" for="preferredTimeSelect">
+              Preferred Time <span class="text-blush-500">*</span>
+            </label>
+            <span class="text-[11px] font-bold uppercase tracking-wider text-blush-500" id="slotAvailabilityTag">
+              Every 30 mins (10:30 AM – 8:30 PM)
+            </span>
+          </div>
+
+          <!-- Hidden Native Select synced for standard form submittal & accessibility -->
+          <select class="sr-only" id="preferredTimeSelect" name="preferredTime" required>
+            <option disabled selected value="">Select time</option>
+          </select>
+
+          <!-- Interactive Time Chips Grid -->
+          <div class="p-3 sm:p-4 rounded-2xl bg-cream border border-blush-200 shadow-inner">
+            <div class="text-xs text-espresso/60 mb-2.5 font-medium flex items-center justify-between">
+              <span id="timeSlotsIntro">Click a slot to select:</span>
+              <span class="text-[10px] text-espresso/50">✦ Salon closes at 8:30 PM</span>
+            </div>
+            <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2" id="timeSlotsContainer">
+              <!-- Dynamically populated via JavaScript -->
+            </div>
+          </div>
+          <p class="text-[11px] text-red-500 mt-1 hidden" id="preferredTimeError">Please select an available time slot.</p>
+        </div>
+
+        <!-- Row 4: Preferred Stylist (Optional) -->
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-espresso mb-2" for="preferredStylist">
+            Preferred Stylist <span class="text-espresso/50 lowercase font-normal">(Optional)</span>
+          </label>
+          <div class="relative">
+            <select
+              class="w-full px-4 py-3.5 rounded-2xl bg-cream border border-blush-200 text-espresso text-sm focus:outline-none focus:ring-2 focus:ring-blush-400 focus:border-blush-400 transition-all shadow-inner appearance-none pr-10 cursor-pointer"
+              id="preferredStylist"
+              name="stylist">
+              <option selected value="Any Available Stylist">Any Available Stylist (First Available)</option>
+              <option value="Jessica Tan – Master Director">Jessica Tan – Master Director (Extensions &amp; Hair Transformation)</option>
+              <option value="Marcus Lee – Senior Colorist">Marcus Lee – Senior Colorist (Balayage &amp; Creative Color)</option>
+              <option value="Chloe Wang – Lead Stylist">Chloe Wang – Lead Stylist (Editorial Waves &amp; Scalp Spa)</option>
+              <option value="David Lim – Precision Specialist">David Lim – Precision Specialist (Precision Cuts &amp; Blowouts)</option>
+            </select>
+            <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-espresso/60">
+              ▼
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 5: Additional Note (Optional) -->
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-espresso mb-2" for="additionalNote">
+            Additional Note <span class="text-espresso/50 lowercase font-normal">(Optional)</span>
+          </label>
+          <textarea
+            class="w-full px-4 py-3 rounded-2xl bg-cream border border-blush-200 text-espresso text-sm placeholder-espresso/40 focus:outline-none focus:ring-2 focus:ring-blush-400 focus:border-blush-400 transition-all shadow-inner resize-none"
+            id="additionalNote"
+            name="note"
+            placeholder="Anything we should know?"
+            rows="3"></textarea>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="pt-2">
+          <button
+            class="w-full inline-flex items-center justify-center space-x-2.5 px-8 py-4 rounded-full bg-espresso text-cream text-xs sm:text-sm font-bold tracking-wider uppercase hover:bg-espresso/90 hover:scale-[1.01] active:scale-[0.99] transition-all shadow-xl group cursor-pointer"
+            id="bookSubmitBtn"
+            type="submit">
+            <span id="btnText">Book Appointment</span>
+            <span class="transition-transform group-hover:translate-x-1 duration-200">→</span>
+          </button>
+        </div>
+
+      </form>
+
+      <!-- SUCCESS CONFIRMATION STATE (Hidden initially) -->
+      <div class="hidden py-8 px-4 sm:px-8 text-center" id="bookingSuccessCard">
+        <!-- Success Badge Icon -->
+        <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-blush-300 text-espresso mx-auto flex items-center justify-center shadow-lg border-2 border-blush-400 mb-6 animate-bounce">
+          <svg class="w-8 h-8 sm:w-10 sm:h-10" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+          </svg>
+        </div>
+
+        <span class="inline-flex items-center px-4 py-1.5 rounded-full bg-emerald-100 text-emerald-900 border border-emerald-300 text-xs font-bold tracking-widest uppercase mb-4">
+          Appointment Requested ✦
+        </span>
+
+        <h3 class="text-3xl sm:text-4xl font-condensed-impact text-espresso uppercase mb-3" style="font-family: Anton, Oswald, sans-serif;">
+          See You Soon!
+        </h3>
+
+        <p class="text-sm sm:text-base text-espresso/85 font-medium max-w-lg mx-auto mb-8 leading-relaxed">
+          “Thanks! Your appointment request has been received. We’ll contact you shortly to confirm your booking.”
+        </p>
+
+        <!-- Booking Summary Receipt Card -->
+        <div class="bg-cream rounded-2xl p-5 sm:p-6 border border-blush-200 text-left max-w-md mx-auto mb-8 shadow-sm space-y-3 text-xs sm:text-sm">
+          <div class="flex items-center justify-between pb-3 border-b border-blush-200/70">
+            <span class="text-espresso/60 uppercase font-bold text-[11px] tracking-wider">Client</span>
+            <span class="font-bold text-espresso" id="summaryName">—</span>
+          </div>
+          <div class="flex items-center justify-between pb-3 border-b border-blush-200/70">
+            <span class="text-espresso/60 uppercase font-bold text-[11px] tracking-wider">Contact</span>
+            <span class="font-bold text-espresso" id="summaryPhone">—</span>
+          </div>
+          <div class="flex items-center justify-between pb-3 border-b border-blush-200/70">
+            <span class="text-espresso/60 uppercase font-bold text-[11px] tracking-wider">Service</span>
+            <span class="font-bold text-blush-500" id="summaryService">—</span>
+          </div>
+          <div class="flex items-center justify-between pb-3 border-b border-blush-200/70">
+            <span class="text-espresso/60 uppercase font-bold text-[11px] tracking-wider">Date &amp; Time</span>
+            <span class="font-bold text-espresso" id="summaryDateTime">—</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-espresso/60 uppercase font-bold text-[11px] tracking-wider">Stylist</span>
+            <span class="font-bold text-espresso" id="summaryStylist">—</span>
+          </div>
+        </div>
+
+        <!-- Post-booking Actions -->
+        <div class="flex flex-col sm:flex-row justify-center gap-3 max-w-md mx-auto">
+          <button
+            class="px-6 py-3 rounded-full bg-espresso text-cream text-xs font-bold tracking-wider uppercase hover:bg-espresso/90 transition-all shadow cursor-pointer"
+            id="bookAnotherBtn"
+            type="button">
+            Book Another Appointment
+          </button>
+          <a
+            class="px-6 py-3 rounded-full bg-blush-300 text-espresso text-xs font-bold tracking-wider uppercase hover:bg-blush-400 transition-all shadow inline-flex items-center justify-center gap-1.5"
+            href="https://maps.app.goo.gl/VhgyhS3G3aU1mBE38"
+            target="_blank"
+            rel="noopener noreferrer">
+            <span>View Studio on Map</span>
+            <span>↗</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+</div>
+</section>
+<!-- END: Minimal Salon Booking Form Section -->
+
+<!-- BEGIN: Footer -->
+<footer class="bg-espresso text-cream/90 py-10 px-6 md:px-12 lg:px-20 text-xs tracking-wider" data-purpose="site-footer" id="about">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+<!-- Brand Name & Icon -->
+<div class="flex items-center space-x-2">
+<span class="text-blush-400 text-base">✦</span>
+<span class="font-bold uppercase tracking-widest text-cream">JT HAIR &amp; BEAUTY SALON SG</span>
+</div>
+<!-- Copyright Notice & Admin Link -->
+<div class="flex flex-wrap items-center justify-center gap-4 text-cream/70 font-medium">
+  <span>© 2025 All Rights Reserved</span>
+  <span class="text-cream/30">•</span>
+  <a href="admin.html" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-cream/10 hover:bg-blush-300 hover:text-espresso text-cream/90 font-semibold tracking-wider transition-all duration-200 border border-white/10 shadow-sm" title="Access Admin Portal">
+    <span>🔐</span>
+    <span>Admin Portal</span>
+    <span class="text-[10px]">↗</span>
+  </a>
+</div>
+<!-- Social Media Links -->
+<div class="flex items-center space-x-6">
+<span class="uppercase tracking-widest font-bold text-cream/80">Follow Us</span>
+<!-- Instagram -->
+<a aria-label="Instagram" class="hover:text-blush-300 transition-colors" href="https://www.instagram.com/jthairsalon.sg/" target="_blank" rel="noopener noreferrer">
+<svg class="w-4 h-4 fill-none stroke-current stroke-2" viewBox="0 0 24 24">
+<rect height="20" rx="5" ry="5" width="20" x="2" y="2"></rect>
+<path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+<line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line>
+</svg>
+</a>
+<!-- TikTok -->
+<a aria-label="TikTok" class="hover:text-blush-300 transition-colors" href="https://tiktok.com">
+<svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+<path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.24 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"></path>
+</svg>
+</a>
+<!-- Pinterest -->
+<a aria-label="Pinterest" class="hover:text-blush-300 transition-colors" href="https://pinterest.com">
+<svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+<path d="M12 0c-6.627 0-12 5.372-12 12 0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345-.09.375-.291 1.199-.332 1.367-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 12-5.373 12-12 0-6.628-5.393-12-12-12z"></path>
+</svg>
+</a>
+</div>
+</div>
+</footer>
+<!-- END: Footer -->
+
+<!-- Interactive Scripts: Dynamic Content Sync Engine & Before/After Sliders -->
+<script data-purpose="site-dynamic-sync">
+  // Helper to initialize comparison sliders
+  function initComparisonWidgets() {
+    const widgets = document.querySelectorAll('.comparison-widget');
+    widgets.forEach((widget) => {
+      const slider = widget.querySelector('.comparison-range-slider');
+      const beforeLayer = widget.querySelector('.comparison-before-layer');
+      const innerWrapper = beforeLayer ? beforeLayer.querySelector('div') : null;
+      const divider = widget.querySelector('.comparison-divider');
+
+      if (!slider || !beforeLayer || !divider) return;
+
+      const updatePosition = (val) => {
+        beforeLayer.style.width = val + '%';
+        divider.style.left = val + '%';
+        if (innerWrapper) {
+          innerWrapper.style.width = (100 / (val / 100)) + '%';
+        }
+      };
+
+      updatePosition(slider.value || 50);
+
+      slider.oninput = (e) => {
+        updatePosition(e.target.value);
+      };
+    });
+  }
+
+  // Dynamic Services Runway & Carousel Engine
+  let servicesAnimationId = null;
+  let servicesIsPaused = false;
+  let servicesPauseTimeout = null;
+
+  function initServicesRunway() {
+    const viewport = document.getElementById('servicesCarouselViewport');
+    const track = document.getElementById('servicesMarqueeTrack');
+    if (!viewport || !track) return;
+
+    if (servicesAnimationId) {
+      cancelAnimationFrame(servicesAnimationId);
+      servicesAnimationId = null;
+    }
+
+    viewport.style.overflowX = 'scroll';
+    viewport.classList.add('no-scrollbar');
+
+    const speed = 0.85; // px per frame
+    function step() {
+      if (!servicesIsPaused) {
+        const halfWidth = track.scrollWidth / 2;
+        if (halfWidth > 50) {
+          viewport.scrollLeft += speed;
+          if (viewport.scrollLeft >= halfWidth) {
+            viewport.scrollLeft -= halfWidth;
+          }
+        }
+      }
+      servicesAnimationId = requestAnimationFrame(step);
+    }
+    servicesAnimationId = requestAnimationFrame(step);
+
+    // Keep wrap seamless during manual scroll / drag
+    viewport.onscroll = () => {
+      const halfWidth = track.scrollWidth / 2;
+      if (halfWidth > 50) {
+        if (viewport.scrollLeft >= halfWidth * 1.8) {
+          viewport.scrollLeft -= halfWidth;
+        } else if (viewport.scrollLeft <= 5) {
+          viewport.scrollLeft += halfWidth;
+        }
+      }
+    };
+
+    // Hover & Touch event handlers
+    viewport.onmouseenter = () => { servicesIsPaused = true; };
+    viewport.onmouseleave = () => { servicesIsPaused = false; };
+    viewport.ontouchstart = () => { servicesIsPaused = true; };
+    viewport.ontouchend = () => {
+      clearTimeout(servicesPauseTimeout);
+      servicesPauseTimeout = setTimeout(() => { servicesIsPaused = false; }, 1200);
+    };
+
+    // Mouse drag support for desktop
+    let isDown = false;
+    let startX = 0;
+    let scrollLeftStart = 0;
+
+    viewport.addEventListener('mousedown', (e) => {
+      isDown = true;
+      servicesIsPaused = true;
+      startX = e.pageX - viewport.offsetLeft;
+      scrollLeftStart = viewport.scrollLeft;
+    });
+    window.addEventListener('mouseup', () => {
+      if (isDown) {
+        isDown = false;
+        clearTimeout(servicesPauseTimeout);
+        servicesPauseTimeout = setTimeout(() => { servicesIsPaused = false; }, 1500);
+      }
+    });
+    viewport.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - viewport.offsetLeft;
+      const walk = (x - startX) * 1.5;
+      viewport.scrollLeft = scrollLeftStart - walk;
+    });
+
+    // Navigation buttons
+    const prevBtn = document.getElementById('servicesPrevBtn');
+    const nextBtn = document.getElementById('servicesNextBtn');
+    const cardStep = 340;
+
+    if (prevBtn) {
+      prevBtn.onclick = () => {
+        servicesIsPaused = true;
+        clearTimeout(servicesPauseTimeout);
+        viewport.scrollBy({ left: -cardStep, behavior: 'smooth' });
+        servicesPauseTimeout = setTimeout(() => { servicesIsPaused = false; }, 2500);
+      };
+    }
+    if (nextBtn) {
+      nextBtn.onclick = () => {
+        servicesIsPaused = true;
+        clearTimeout(servicesPauseTimeout);
+        viewport.scrollBy({ left: cardStep, behavior: 'smooth' });
+        servicesPauseTimeout = setTimeout(() => { servicesIsPaused = false; }, 2500);
+      };
+    }
+  }
+
+  // Dynamic Services Renderer from Admin Config
+  function syncDynamicServices() {
+    try {
+      const defaultCards = [
+        {
+          title: 'CUT',
+          desc: 'Precision cuts that define you.',
+          image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAjapZIyj2vAUqn9u-kdLWxUPWGZfdWSCLxxO0ET7ef4S3Ln3uZLAU6Wkl7l6OsIGZJkEmOYisVmvJPII3oR72qDNO9iZTynW4xfv-Q8w-z9oxQe4Xhe4tX2EqV_xo1RJ1dvjqjb1sG1kT0lmi9JFYIQKcG2OTNj9ftmYEZHueKFZtqTBc4UG3RH6moxR0DC_L99LSLMUlOtqQ2aCRF4tvPsfZJgzZ2udwuuuuQlgHL2P67UZNOGmAEc2OyHSySLNETFO5M6y-aayYxJg4'
+        },
+        {
+          title: 'COLOR',
+          desc: 'Rich, radiant color that turns heads.',
+          image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBBNUA8FSzNSAfJaax5udaR-BkouZuYEj-OY55fhMl5v4BBHIMov3_9dB4DxGVnEXW0ilpQS7LJgRKW70sa_fzQb35KtG6pbsPpV0TJ-nC3qvfVVy-pLaltczAjIuocJrbUl7pYNOqDZYdrJiRJild9EZf3-99mJwXu86_wAFZO2NdMq4lqMKu75HapABcNuKOQzW5SQuP982wT0cREIkNdt_yMOc_Ud5Q65qYq7Fvr7ZfOJ54Oa8UZcmAx3vAuco-lTtbnqUP1BQgDT0U'
+        },
+        {
+          title: 'STYLE',
+          desc: 'Blowouts, waves & effortless styling.',
+          image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDTYquhy8ZBgUDCeWTrVg9Eebcj5kAqaxe-tm7nWvD4JSMs1f5iQ6oWDcymbLuki3gHKMN0kcWzZ-FNGeG6-7Pi2KDJtafkm799Sv-U7lWep9-41DZ4vkSZBZINCsMSASlQHIOxzbcefANJqKOWvDHdz18tskpVzfxvBdsqZzsTfnTgvFzp27uOyEhPaDGA9rg07Gi4zvhXiie__ZJTNLFH30Q-lfDnANEub3V91nA6I1yLYEMK5BTYEuDQkGQNcqnJ6cathRqepxVJ_nY'
+        }
+      ];
+
+      let config = { tag: 'Our Services', icon: '✦', cards: defaultCards };
+      const saved = localStorage.getItem('jt_services_config');
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          if (parsed.cards && parsed.cards.length > 0) {
+            config = parsed;
+          }
+        } catch(err){}
+      }
+
+      const tagText = document.getElementById('servicesTagText');
+      const tagIcon = document.getElementById('servicesTagIcon');
+      if (tagText && config.tag) tagText.textContent = config.tag;
+      if (tagIcon && config.icon) tagIcon.textContent = config.icon;
+
+      const track = document.getElementById('servicesMarqueeTrack');
+      if (track && config.cards && config.cards.length > 0) {
+        track.innerHTML = '';
+
+        const createCard = (c) => {
+          const cardEl = document.createElement('div');
+          cardEl.className = 'group relative flex-shrink-0 w-[280px] sm:w-[320px] md:w-[360px] aspect-[4/5] rounded-3xl overflow-hidden bg-espresso cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1.5 select-none';
+          cardEl.innerHTML = `
+            <img alt="${c.title}" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 opacity-90 group-hover:opacity-100 pointer-events-none" src="${c.image}">
+            <div class="absolute inset-0 bg-gradient-to-t from-espresso via-espresso/30 to-transparent pointer-events-none"></div>
+            <div class="absolute inset-0 p-6 sm:p-8 flex flex-col justify-end">
+              <h3 class="text-5xl sm:text-6xl md:text-7xl text-cream uppercase mb-2 leading-none font-condensed-impact" style="font-family: Anton, Oswald, sans-serif; letter-spacing: 0.02em; font-weight: 400;">
+                ${c.title}
+              </h3>
+              <div class="flex items-end justify-between gap-3">
+                <p class="text-xs md:text-sm text-cream/90 font-medium max-w-[190px] leading-snug">
+                  ${c.desc}
+                </p>
+                <a href="#book" class="w-10 h-10 rounded-full bg-blush-300 text-espresso flex items-center justify-center group-hover:bg-blush-400 group-hover:scale-110 transition-all duration-200 shadow flex-shrink-0">
+                  <span class="text-base font-bold">→</span>
+                </a>
+              </div>
+            </div>
+          `;
+          return cardEl;
+        };
+
+        // Prepare seamless repeating sequence
+        let baseList = [...config.cards];
+        while (baseList.length < 6) {
+          baseList = baseList.concat(config.cards);
+        }
+        const fullLoop = [...baseList, ...baseList];
+
+        fullLoop.forEach((c) => {
+          track.appendChild(createCard(c));
+        });
+
+        initServicesRunway();
+      }
+    } catch(e) {
+      console.error('Error syncing dynamic services:', e);
+    }
+  }
+
+  // Dynamic Before & After Sliders Renderer from Admin Config
+  function syncDynamicSliders() {
+    try {
+      const saved = localStorage.getItem('jt_sliders_config');
+      if (!saved) {
+        initComparisonWidgets();
+        return;
+      }
+      const config = JSON.parse(saved);
+
+      const headlineEl = document.getElementById('baHeadlineText');
+      const subtitleEl = document.getElementById('baSubtitleText');
+      if (headlineEl && config.headline) {
+        headlineEl.innerHTML = `${config.headline} <span class="text-blush-400 ml-3 text-3xl sm:text-5xl flex-shrink-0">✦</span>`;
+      }
+      if (subtitleEl && config.subtitle) {
+        subtitleEl.textContent = config.subtitle;
+      }
+
+      const wrapper = document.getElementById('ba-vertical-cards-wrapper');
+      if (wrapper && config.sliders && config.sliders.length > 0) {
+        wrapper.innerHTML = '';
+        config.sliders.forEach((s, idx) => {
+          const card = document.createElement('div');
+          card.className = 'bg-creamLight rounded-3xl p-5 sm:p-7 lg:p-8 border border-blush-200/70 shadow-xl relative transition-all duration-300 hover:shadow-2xl';
+          card.innerHTML = `
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-5 border-b border-blush-200/50 mb-6 gap-3">
+              <div>
+                <span class="text-xs font-bold uppercase tracking-widest text-blush-500">${s.subtitle || `Look 0${idx + 1} of 0${config.sliders.length}`}</span>
+                <h3 class="text-2xl sm:text-3xl font-condensed-impact text-espresso uppercase tracking-tight" style="font-family: Anton, Oswald, sans-serif;">
+                  ${s.title}
+                </h3>
+              </div>
+              <div class="text-xs tracking-wider uppercase text-espresso/60 font-medium flex items-center gap-2">
+                <span>Drag slider horizontally</span>
+                <span class="text-blush-400 font-bold">⇄</span>
+              </div>
+            </div>
+            <div class="relative w-full aspect-[4/3] sm:aspect-[16/9] lg:aspect-[21/9] rounded-2xl overflow-hidden bg-espresso select-none shadow-inner comparison-widget">
+              <img alt="After - ${s.title}" class="absolute inset-0 w-full h-full object-cover pointer-events-none" src="${s.afterImg}">
+              <span class="absolute top-4 right-4 z-10 px-4 py-1.5 rounded-full bg-espresso/85 text-cream text-[11px] font-black uppercase tracking-widest backdrop-blur-sm shadow border border-white/20">
+                AFTER ✦
+              </span>
+              <div class="comparison-before-layer absolute inset-0 overflow-hidden pointer-events-none" style="width: 50%;">
+                <div class="relative w-full h-full" style="width: 200%;">
+                  <img alt="Before - ${s.title}" class="absolute inset-0 w-full h-full object-cover" src="${s.beforeImg}">
+                </div>
+                <span class="absolute top-4 left-4 z-10 px-4 py-1.5 rounded-full bg-creamLight/95 text-espresso text-[11px] font-black uppercase tracking-widest backdrop-blur-sm shadow border border-blush-300">
+                  ✦ BEFORE
+                </span>
+              </div>
+              <div class="comparison-divider absolute top-0 bottom-0 pointer-events-none z-20 flex items-center justify-center" style="left: 50%;">
+                <div class="w-[3px] h-full bg-cream shadow-[0_0_8px_rgba(0,0,0,0.4)]"></div>
+                <div class="absolute w-11 h-11 rounded-full bg-cream border-2 border-blush-400 shadow-xl flex items-center justify-center text-espresso text-xs font-black">
+                  <span class="tracking-tighter">◂ ▸</span>
+                </div>
+              </div>
+              <input aria-label="Compare Before and After ${s.title}" class="comparison-range-slider absolute inset-0 w-full h-full opacity-0 cursor-ew-resize z-30" max="100" min="0" type="range" value="50">
+            </div>
+          `;
+          wrapper.appendChild(card);
+        });
+      }
+      initComparisonWidgets();
+    } catch(e) {
+      console.error('Error syncing dynamic sliders:', e);
+      initComparisonWidgets();
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    syncDynamicServices();
+    syncDynamicSliders();
+
+    // Re-sync if updated from another tab
+    window.addEventListener('storage', () => {
+      syncDynamicServices();
+      syncDynamicSliders();
+    });
+
+    // Smooth scroll for internal anchor tags
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+  });
+</script>
+
+<!-- Interactive Booking Engine, Live Availability & Real-Time Sync -->
+<script data-purpose="dynamic-booking-engine">
+  document.addEventListener('DOMContentLoaded', () => {
+    const bookingForm = document.getElementById('salonBookingForm');
+    const successCard = document.getElementById('bookingSuccessCard');
+    const serviceSelect = document.getElementById('serviceSelect');
+    const dateInput = document.getElementById('preferredDate');
+    const timeSelect = document.getElementById('preferredTimeSelect');
+    const timeSlotsContainer = document.getElementById('timeSlotsContainer');
+    const slotAvailabilityTag = document.getElementById('slotAvailabilityTag');
+    const bookAnotherBtn = document.getElementById('bookAnotherBtn');
+    const bookSubmitBtn = document.getElementById('bookSubmitBtn');
+
+    // Operational Parameters (Synced with Admin config in real-time)
+    function getScheduleConfig() {
+      try {
+        const saved = localStorage.getItem('jt_schedule_config');
+        return saved ? JSON.parse(saved) : {
+          openingTime: '10:30',
+          closingTime: '20:30',
+          slotInterval: '30',
+          slotCapacity: '2',
+          recurringBlockedHours: [
+            { id: 'lunch-break', startTime: '13:00', endTime: '14:00', reason: 'Daily Lunch Break' }
+          ],
+          blockedDates: [
+            { date: '2026-12-25', reason: 'Christmas Day' },
+            { date: '2027-01-01', reason: "New Year's Day" }
+          ],
+          dateBlockedSlots: {}
+        };
+      } catch(e) {
+        return {
+          openingTime: '10:30',
+          closingTime: '20:30',
+          slotInterval: '30',
+          slotCapacity: '2',
+          recurringBlockedHours: [],
+          blockedDates: [],
+          dateBlockedSlots: {}
+        };
+      }
+    }
+
+    function getBookingsList() {
+      try {
+        const saved = localStorage.getItem('jt_bookings');
+        return saved ? JSON.parse(saved) : [];
+      } catch(e) {
+        return [];
+      }
+    }
+
+    // Service duration lookup in minutes
+    const serviceDurations = {
+      'Men – Cut Only — 15': 30,
+      'Men – Wash & Cut — 20': 45,
+      'Ladies – Cut Only — 20': 30,
+      'Ladies – Wash & Cut — 25': 45,
+      'Colour — 58+': 90,
+      'Cold Perm — 58+': 90,
+      'Setting Perm — 108+': 120,
+      'Volume Rebonding — 78+': 120,
+      'Hair Treatment — 38+': 60,
+      'Scalp Treatment — 58+': 60,
+      'Keratin Treatment — 108+': 90,
+      'Hair Extensions — From 1+ / strand': 90,
+      'Eyebrow Trim — 8': 15
+    };
+
+    let selectedTimeSlot = '';
+
+    // Initialize Date Limits (Today as minimum)
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    const minDateStr = `${yyyy}-${mm}-${dd}`;
+    if (dateInput) {
+      dateInput.min = minDateStr;
+      dateInput.value = minDateStr;
+    }
+
+    // Dynamic Slot Generation & Rendering
+    function renderTimeSlots() {
+      if (!timeSlotsContainer || !timeSelect || !dateInput) return;
+
+      const schedule = getScheduleConfig();
+      const [openHour, openMin] = (schedule.openingTime || '10:30').split(':').map(Number);
+      const [closeHour, closeMin] = (schedule.closingTime || '20:30').split(':').map(Number);
+      const interval = parseInt(schedule.slotInterval || '30', 10);
+      const capacity = parseInt(schedule.slotCapacity || '2', 10);
+      const blockedDates = schedule.blockedDates || [];
+      const recurringBreaks = schedule.recurringBlockedHours || [];
+      const dateBlockedMap = schedule.dateBlockedSlots || {};
+      const allBookings = getBookingsList();
+
+      const selectedDate = dateInput.value;
+      const manuallyBlockedSlots = dateBlockedMap[selectedDate] || [];
+
+      const selectedOption = serviceSelect.options[serviceSelect.selectedIndex];
+      const duration = selectedOption && selectedOption.dataset && selectedOption.dataset.duration
+        ? parseInt(selectedOption.dataset.duration, 10)
+        : (serviceDurations[serviceSelect.value] || 45);
+
+      timeSlotsContainer.innerHTML = '';
+      timeSelect.innerHTML = '<option disabled value="">Select time</option>';
+
+      if (!selectedDate) {
+        if (slotAvailabilityTag) slotAvailabilityTag.textContent = 'Please select a date';
+        timeSlotsContainer.innerHTML = '<p class="text-xs text-espresso/50 col-span-full py-2">Select a date above to check live availability.</p>';
+        return;
+      }
+
+      // Check if Date is Blocked in Admin Portal
+      const blockedMatch = blockedDates.find(b => b.date === selectedDate);
+      if (blockedMatch) {
+        if (slotAvailabilityTag) slotAvailabilityTag.textContent = `Salon Closed: ${blockedMatch.reason || 'Holiday'}`;
+        timeSlotsContainer.innerHTML = `
+          <div class="col-span-full py-4 text-center">
+            <span class="text-xs font-bold uppercase tracking-wider text-rose-600 bg-rose-100 px-3.5 py-1.5 rounded-full border border-rose-300">
+              Salon is closed on this date (${blockedMatch.reason || 'Holiday / Off-day'})
+            </span>
+            <p class="text-[11px] text-espresso/60 mt-2">Please pick another date for your booking.</p>
+          </div>
+        `;
+        return;
+      }
+
+      // Generate Slots dynamically based on Admin Opening/Closing Times
+      const generatedSlots = [];
+      let curMins = openHour * 60 + openMin;
+      const endMins = closeHour * 60 + closeMin;
+
+      while (curMins < endMins) {
+        const h = Math.floor(curMins / 60);
+        const m = curMins % 60;
+        const period = h >= 12 ? 'PM' : 'AM';
+        const displayH = h % 12 === 0 ? 12 : h % 12;
+        const displayM = String(m).padStart(2, '0');
+        const display = `${displayH}:${displayM} ${period}`;
+        generatedSlots.push({
+          id: `${String(h).padStart(2, '0')}:${displayM}`,
+          display: display,
+          hour: h,
+          min: m,
+          totalMin: curMins
+        });
+        curMins += interval;
+      }
+
+      const isToday = selectedDate === minDateStr;
+      const now = new Date();
+      const currentHour = now.getHours();
+      const currentMin = now.getMinutes();
+
+      let availableCount = 0;
+
+      generatedSlots.forEach(slot => {
+        // 1. Past time today check
+        const isPastToday = isToday && (slot.hour < currentHour || (slot.hour === currentHour && slot.min <= currentMin));
+
+        // 2. Closing time limit check
+        const slotEndMinTotal = slot.totalMin + duration;
+        const closingMinTotal = closeHour * 60 + closeMin;
+        const exceedsClosing = slotEndMinTotal > closingMinTotal;
+
+        // 3. Recurring Daily Breaks (e.g. Lunch 1:00 PM - 2:00 PM)
+        const recurringBreakMatch = recurringBreaks.find(brk => {
+          const [bStartH, bStartM] = brk.startTime.split(':').map(Number);
+          const [bEndH, bEndM] = brk.endTime.split(':').map(Number);
+          const startMin = bStartH * 60 + bStartM;
+          const endMin = bEndH * 60 + bEndM;
+          return slot.totalMin >= startMin && slot.totalMin < endMin;
+        });
+
+        // 4. Manually Blocked Slots for this specific date by Admin
+        const isManuallyBlocked = manuallyBlockedSlots.includes(slot.id);
+
+        // 5. Customer Bookings Capacity check
+        const slotBookings = allBookings.filter(b => b.date === selectedDate && b.time === slot.display && b.status !== 'cancelled');
+        const numBooked = slotBookings.length;
+        const isFull = numBooked >= capacity;
+
+        const isAvailable = !isPastToday && !exceedsClosing && !recurringBreakMatch && !isManuallyBlocked && !isFull;
+
+        // Unavailable reason text
+        let unavailableReason = 'Unavailable';
+        if (isPastToday) unavailableReason = 'Passed';
+        else if (exceedsClosing) unavailableReason = 'Exceeds Closing';
+        else if (recurringBreakMatch) unavailableReason = recurringBreakMatch.reason || 'Staff Break';
+        else if (isManuallyBlocked) unavailableReason = 'Blocked by Salon';
+        else if (isFull) unavailableReason = 'Fully Booked';
+
+        // Sync Native Select
+        const opt = document.createElement('option');
+        opt.value = slot.display;
+        opt.textContent = isAvailable ? slot.display : `${slot.display} (${unavailableReason})`;
+        opt.disabled = !isAvailable;
+        timeSelect.appendChild(opt);
+
+        // Visual Button Chip
+        const chip = document.createElement('button');
+        chip.type = 'button';
+        chip.className = `px-2.5 py-2 rounded-xl text-xs font-semibold transition-all duration-150 flex flex-col items-center justify-center border text-center ${
+          isAvailable
+            ? (selectedTimeSlot === slot.display
+                ? 'bg-espresso text-cream border-espresso shadow-md ring-2 ring-blush-400 scale-105'
+                : 'bg-creamLight hover:bg-blush-200/60 text-espresso border-blush-200/80 hover:border-blush-400 cursor-pointer')
+            : 'bg-espresso/5 text-espresso/30 border-transparent cursor-not-allowed line-through opacity-60'
+        }`;
+
+        const remainingSpots = capacity - numBooked;
+        chip.innerHTML = isAvailable && remainingSpots < capacity
+          ? `<span>${slot.display}</span><span class="text-[9px] font-bold text-amber-600 block -mt-0.5">1 spot left</span>`
+          : `<span>${slot.display}</span>`;
+
+        chip.title = !isAvailable 
+          ? `${slot.display} is ${unavailableReason}`
+          : `${remainingSpots} of ${capacity} spots open for ${slot.display}`;
+
+        if (isAvailable) {
+          availableCount++;
+          chip.addEventListener('click', () => {
+            selectedTimeSlot = slot.display;
+            timeSelect.value = slot.display;
+            const timeErr = document.getElementById('preferredTimeError');
+            if (timeErr) timeErr.classList.add('hidden');
+            renderTimeSlots();
+          });
+        }
+
+        timeSlotsContainer.appendChild(chip);
+      });
+
+      // Update Live Status Tag
+      if (slotAvailabilityTag) {
+        if (serviceSelect.value) {
+          slotAvailabilityTag.textContent = `${availableCount} slots open for ${serviceSelect.value.split('—')[0].trim()} (${duration}m)`;
+        } else {
+          slotAvailabilityTag.textContent = `${availableCount} slots available on this date`;
+        }
+      }
+
+      // If previously selected slot became invalid, clear it
+      if (selectedTimeSlot) {
+        const matchingOpt = Array.from(timeSelect.options).find(o => o.value === selectedTimeSlot && !o.disabled);
+        if (!matchingOpt) {
+          selectedTimeSlot = '';
+          timeSelect.value = '';
+        } else {
+          timeSelect.value = selectedTimeSlot;
+        }
+      }
+    }
+
+    // Listeners for dynamic updates
+    if (serviceSelect) {
+      serviceSelect.addEventListener('change', () => {
+        const sErr = document.getElementById('serviceSelectError');
+        if (sErr) sErr.classList.add('hidden');
+        renderTimeSlots();
+      });
+    }
+
+    if (dateInput) {
+      dateInput.addEventListener('change', () => {
+        const dErr = document.getElementById('preferredDateError');
+        if (dErr) dErr.classList.add('hidden');
+        renderTimeSlots();
+      });
+    }
+
+    // Form Submission & Sync to Admin Dashboard
+    if (bookingForm) {
+      bookingForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const fullName = document.getElementById('fullName');
+        const phoneNumber = document.getElementById('phoneNumber');
+        const stylist = document.getElementById('preferredStylist');
+        const note = document.getElementById('additionalNote');
+
+        let isValid = true;
+
+        if (!fullName.value.trim()) {
+          document.getElementById('fullNameError').classList.remove('hidden');
+          isValid = false;
+        } else {
+          document.getElementById('fullNameError').classList.add('hidden');
+        }
+
+        if (!phoneNumber.value.trim() || phoneNumber.value.trim().length < 5) {
+          document.getElementById('phoneNumberError').classList.remove('hidden');
+          isValid = false;
+        } else {
+          document.getElementById('phoneNumberError').classList.add('hidden');
+        }
+
+        if (!serviceSelect.value) {
+          document.getElementById('serviceSelectError').classList.remove('hidden');
+          isValid = false;
+        } else {
+          document.getElementById('serviceSelectError').classList.add('hidden');
+        }
+
+        if (!dateInput.value) {
+          document.getElementById('preferredDateError').classList.remove('hidden');
+          isValid = false;
+        } else {
+          document.getElementById('preferredDateError').classList.add('hidden');
+        }
+
+        if (!selectedTimeSlot && !timeSelect.value) {
+          document.getElementById('preferredTimeError').classList.remove('hidden');
+          isValid = false;
+        } else {
+          document.getElementById('preferredTimeError').classList.add('hidden');
+        }
+
+        if (!isValid) return;
+
+        // Button Loading Animation
+        if (bookSubmitBtn) {
+          bookSubmitBtn.disabled = true;
+          bookSubmitBtn.classList.add('opacity-75');
+          const btnTxt = document.getElementById('btnText');
+          if (btnTxt) btnTxt.textContent = 'Confirming Slot...';
+        }
+
+        setTimeout(() => {
+          const bookedTime = selectedTimeSlot || timeSelect.value;
+          const chosenStylist = stylist ? stylist.value : 'Any Available Stylist';
+          const clientNote = note ? note.value.trim() : '';
+
+          // Format Date nicely
+          const [y, m, d] = dateInput.value.split('-');
+          const dateObj = new Date(y, m - 1, d);
+          const formattedDate = dateObj.toLocaleDateString('en-SG', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
+
+          // Populate Summary Receipt
+          document.getElementById('summaryName').textContent = fullName.value.trim();
+          document.getElementById('summaryPhone').textContent = phoneNumber.value.trim();
+          document.getElementById('summaryService').textContent = serviceSelect.value;
+          document.getElementById('summaryDateTime').textContent = `${formattedDate} @ ${bookedTime}`;
+          document.getElementById('summaryStylist').textContent = chosenStylist;
+
+          // SAVE TO SUPABASE BACKEND & LOCAL STORAGE
+          const newBooking = {
+            id: 'BK-' + Date.now().toString(36).toUpperCase(),
+            fullName: fullName.value.trim(),
+            phoneNumber: phoneNumber.value.trim(),
+            service: serviceSelect.value,
+            date: dateInput.value,
+            time: bookedTime,
+            stylist: chosenStylist,
+            note: clientNote,
+            status: 'pending',
+            createdAt: new Date().toISOString()
+          };
+
+          // Save to Supabase Cloud Database
+          if (window.JTSupabase && typeof window.JTSupabase.saveBooking === 'function') {
+            window.JTSupabase.saveBooking(newBooking).then((result) => {
+              if (result.success) {
+                console.log('[JT Salon] Appointment saved to Supabase:', result.data);
+              } else {
+                console.warn('[JT Salon] Supabase save note:', result.error);
+              }
+            }).catch((err) => {
+              console.error('[JT Salon] Supabase save error:', err);
+            });
+          }
+
+          // Save to LocalStorage for offline fallback and fast client sync
+          try {
+            const existingBookings = JSON.parse(localStorage.getItem('jt_bookings') || '[]');
+            existingBookings.push(newBooking);
+            localStorage.setItem('jt_bookings', JSON.stringify(existingBookings));
+            window.dispatchEvent(new Event('storage'));
+          } catch(err) {
+            console.error('Error saving booking to local storage:', err);
+          }
+
+          // Hide Form & Reveal Success Card
+          bookingForm.classList.add('hidden');
+          if (successCard) successCard.classList.remove('hidden');
+
+          // Reset submit button state
+          if (bookSubmitBtn) {
+            bookSubmitBtn.disabled = false;
+            bookSubmitBtn.classList.remove('opacity-75');
+            const btnTxt = document.getElementById('btnText');
+            if (btnTxt) btnTxt.textContent = 'Book Appointment';
+          }
+
+          // Scroll to Confirmation Card
+          if (successCard) {
+            successCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }, 600);
+      });
+    }
+
+    // Book Another Action
+    if (bookAnotherBtn) {
+      bookAnotherBtn.addEventListener('click', () => {
+        if (bookingForm) bookingForm.reset();
+        if (dateInput) dateInput.value = minDateStr;
+        selectedTimeSlot = '';
+        renderTimeSlots();
+        if (successCard) successCard.classList.add('hidden');
+        if (bookingForm) {
+          bookingForm.classList.remove('hidden');
+          bookingForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    }
+
+    // Initial slot render
+    renderTimeSlots();
+
+    // Fetch latest bookings from Supabase to ensure accurate real-time slot capacity
+    if (window.JTSupabase && typeof window.JTSupabase.fetchBookings === 'function') {
+      window.JTSupabase.fetchBookings().then(remoteBookings => {
+        if (remoteBookings && remoteBookings.length > 0) {
+          try {
+            localStorage.setItem('jt_bookings', JSON.stringify(remoteBookings));
+            renderTimeSlots();
+          } catch(e) {}
+        }
+      });
+    }
+
+    // Listen for schedule updates from Admin tab
+    window.addEventListener('storage', () => {
+      renderTimeSlots();
+    });
+  });
+</script>
+
+</body></html>

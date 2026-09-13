@@ -7,30 +7,33 @@
   let supabase = null;
   let initPromise = null;
 
-  // Load config from server (/api/config) which reads .env file
+  const DEFAULT_SUPABASE_URL = 'https://larknxsxfgyjtcerbnko.supabase.co';
+  const DEFAULT_SUPABASE_ANON_KEY = 'sb_publishable_NvLecSzMOqNPw3_C5BebKg_r0uizxu7';
+
+  // Load config from server (/api/config) or fallback to default publishable credentials
   async function loadConfigAndInit() {
     if (supabase) return supabase;
     if (initPromise) return initPromise;
 
     initPromise = (async () => {
-      let supabaseUrl = '';
-      let supabaseAnonKey = '';
+      let supabaseUrl = DEFAULT_SUPABASE_URL;
+      let supabaseAnonKey = DEFAULT_SUPABASE_ANON_KEY;
 
       try {
         const response = await fetch('/api/config');
         if (response.ok) {
           const config = await response.json();
-          supabaseUrl = config.supabaseUrl;
-          supabaseAnonKey = config.supabaseAnonKey;
+          if (config.supabaseUrl) supabaseUrl = config.supabaseUrl;
+          if (config.supabaseAnonKey) supabaseAnonKey = config.supabaseAnonKey;
         }
       } catch (err) {
-        console.warn('[Supabase] Could not fetch /api/config from server:', err);
+        console.warn('[Supabase] /api/config unavailable, using default publishable keys:', err);
       }
 
       if (window.supabase && supabaseUrl && supabaseAnonKey) {
         try {
           supabase = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
-          console.log('[Supabase] Initialized successfully from .env config.');
+          console.log('[Supabase] Initialized successfully.');
         } catch (err) {
           console.error('[Supabase] Client creation failed:', err);
         }

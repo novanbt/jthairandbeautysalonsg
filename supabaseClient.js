@@ -1,49 +1,24 @@
 /**
  * JT HAIR & BEAUTY SALON SG — SUPABASE CLIENT & BACKEND INTEGRATION
- * Dynamically loads environment variables from /api/config (.env)
+ * Project ID: larknxsxfgyjtcerbnko
  */
 
 (function () {
+  const SUPABASE_URL = 'https://larknxsxfgyjtcerbnko.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable_NvLecSzMOqNPw3_C5BebKg_r0uizxu7';
+
   let supabase = null;
-  let initPromise = null;
 
-  const DEFAULT_SUPABASE_URL = 'https://larknxsxfgyjtcerbnko.supabase.co';
-  const DEFAULT_SUPABASE_ANON_KEY = 'sb_publishable_NvLecSzMOqNPw3_C5BebKg_r0uizxu7';
-
-  // Load config from server (/api/config) or fallback to default publishable credentials
-  async function loadConfigAndInit() {
-    if (supabase) return supabase;
-    if (initPromise) return initPromise;
-
-    initPromise = (async () => {
-      let supabaseUrl = DEFAULT_SUPABASE_URL;
-      let supabaseAnonKey = DEFAULT_SUPABASE_ANON_KEY;
-
+  function initSupabase() {
+    if (window.supabase && !supabase) {
       try {
-        const response = await fetch('/api/config');
-        if (response.ok) {
-          const config = await response.json();
-          if (config.supabaseUrl) supabaseUrl = config.supabaseUrl;
-          if (config.supabaseAnonKey) supabaseAnonKey = config.supabaseAnonKey;
-        }
+        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        console.log('[Supabase] Initialized successfully.');
       } catch (err) {
-        console.warn('[Supabase] /api/config unavailable, using default publishable keys:', err);
+        console.error('[Supabase] Client initialization failed:', err);
       }
-
-      if (window.supabase && supabaseUrl && supabaseAnonKey) {
-        try {
-          supabase = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
-          console.log('[Supabase] Initialized successfully.');
-        } catch (err) {
-          console.error('[Supabase] Client creation failed:', err);
-        }
-      } else if (!window.supabase) {
-        console.warn('[Supabase] Supabase JS SDK not detected on page.');
-      }
-      return supabase;
-    })();
-
-    return initPromise;
+    }
+    return supabase;
   }
 
   // Format JS booking object to Supabase row format
@@ -84,11 +59,11 @@
    * @returns {Promise<{success: boolean, data?: any, error?: string, fallbackData?: any}>}
    */
   async function saveBooking(bookingData) {
-    const client = await loadConfigAndInit();
+    const client = initSupabase();
     const row = toSupabaseRow(bookingData);
 
     if (!client) {
-      console.warn('[Supabase] Client not connected. Saved to local storage fallback.');
+      console.warn('[Supabase] Client not initialized. Saved to local storage fallback.');
       return { success: false, error: 'Supabase client not initialized', fallbackData: fromSupabaseRow(row) };
     }
 
@@ -116,7 +91,7 @@
    * @returns {Promise<Array>}
    */
   async function fetchBookings() {
-    const client = await loadConfigAndInit();
+    const client = initSupabase();
     if (!client) return [];
 
     try {
@@ -143,7 +118,7 @@
    * @param {string} status 
    */
   async function updateBookingStatus(id, status) {
-    const client = await loadConfigAndInit();
+    const client = initSupabase();
     if (!client) return false;
 
     try {
@@ -168,7 +143,7 @@
    * @param {string} id 
    */
   async function deleteBooking(id) {
-    const client = await loadConfigAndInit();
+    const client = initSupabase();
     if (!client) return false;
 
     try {
@@ -194,8 +169,8 @@
    * @param {Function} onUpdate 
    * @param {Function} onDelete 
    */
-  async function subscribeToBookings(onInsert, onUpdate, onDelete) {
-    const client = await loadConfigAndInit();
+  function subscribeToBookings(onInsert, onUpdate, onDelete) {
+    const client = initSupabase();
     if (!client) return null;
 
     try {
@@ -235,7 +210,7 @@
 
   // Export globally
   window.JTSupabase = {
-    init: loadConfigAndInit,
+    init: initSupabase,
     saveBooking: saveBooking,
     fetchBookings: fetchBookings,
     updateBookingStatus: updateBookingStatus,
@@ -245,6 +220,6 @@
     fromSupabaseRow: fromSupabaseRow
   };
 
-  // Trigger initial background load
-  loadConfigAndInit();
+  // Immediate init
+  initSupabase();
 })();
